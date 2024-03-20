@@ -10,6 +10,8 @@ filtered results in CSV format, supports uploading multiple files, and enables u
 important to note that the application stores data temporarily in memory, and refreshing the page will clear all
 uploaded data.
 
+<a href="https://www.producthunt.com/posts/whattheduck?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-whattheduck" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=404278&theme=light" alt="WhatTheDuck - Your&#0032;browser&#0032;based&#0032;SQL&#0032;engine&#0032;for&#0032;CSV&#0032;files | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+
 ## Table of Contents
 
 - [Installation](#installation)
@@ -71,7 +73,14 @@ Contributions to WhatTheDuck are welcome! If you would like to contribute to the
 5. Push the changes to your forked repository.
 6. Submit a pull request to the main repository.
 
+# Created by Incentius
+
+If you are seeking to leverage innovative technologies to create a custom application or transform your business
+processes, we invite you to reach out to Incentius. Discover how we can help you enable digital transformation and
+accelerate your business progress. For more information, visit us at [Incentius](https://incentius.com)
+
 ## License
 
-WhatTheDuck is open-source software released under the [MIT License](./LICENSE.md). You are free to use, modify, and distribute the
+WhatTheDuck is open-source software released under the [MIT License](./LICENSE.md). You are free to use, modify, and
+distribute the
 application in accordance with the terms of the license.
