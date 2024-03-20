@@ -73,5 +73,5 @@ Contributions to WhatTheDuck are welcome! If you would like to contribute to the
 
 ## License
 
-WhatTheDuck is open-source software released under the MIT License. You are free to use, modify, and distribute the
+WhatTheDuck is open-source software released under the [MIT License](./LICENSE.md). You are free to use, modify, and distribute the
 application in accordance with the terms of the license.
