@@ -1,0 +1,33 @@
+{
+  "name": "duckdb",
+  "version": "0.0.1",
+  "description": "A Quasar Project",
+  "productName": "Quasar App",
+  "author": "pratikpatel <pratik.patel@aurochssoftware.com>",
+  "private": true,
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "dependencies": {
+    "@duckdb/duckdb-wasm": "^1.20.0",
+    "@quasar/extras": "^1.16.9",
+    "axios": "^0.21.1",
+    "file-saver": "^2.0.5",
+    "quasar": "^2.15.1",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0",
+    "vue3-ace-editor": "^2.2.2",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@quasar/app-vite": "^1.8.0",
+    "autoprefixer": "^9.8.8",
+    "postcss": "^7.0.39",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
+  },
+  "engines": {
+    "node": "^18 || ^16 || ^14.19",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  }
+}
