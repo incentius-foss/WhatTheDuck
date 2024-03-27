@@ -11,6 +11,7 @@ important to note that the application stores data temporarily in memory, and re
 uploaded data.
 
 <a href="https://www.producthunt.com/posts/whattheduck?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-whattheduck" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=404278&theme=light" alt="WhatTheDuck - Your&#0032;browser&#0032;based&#0032;SQL&#0032;engine&#0032;for&#0032;CSV&#0032;files | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+<a href="https://incentius.com/" target="_blank"><img src="https://incentius.com/wp-content/uploads/2022/09/logo_93d9549053.png" alt="Incentius" style="width: 56px; height: 56px;" width="56" height="56" /></a>
 
 ## Table of Contents
 
@@ -84,3 +85,8 @@ accelerate your business progress. For more information, visit us at [Incentius]
 WhatTheDuck is open-source software released under the [MIT License](./LICENSE.md). You are free to use, modify, and
 distribute the
 application in accordance with the terms of the license.
+
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=incentius-foss/WhatTheDuck&type=Date)](https://star-history.com/#incentius-foss/WhatTheDuck&Date)
