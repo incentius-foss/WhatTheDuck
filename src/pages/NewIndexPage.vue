@@ -151,7 +151,11 @@
 
     </q-card-section>
     <q-card-section class="tw-flex-1" style="max-height:671px;">
-      <div class="tw-flex tw-justify-end tw-mb-3">
+      <div class="tw-flex tw-justify-end tw-mb-3 tw-gap-3">
+        <button @click="uploadSampleFile" type="button"
+                class="tw-rounded-lg tw-bg-hara hover:tw-bg-morehara tw-px-3.5 tw-py-1.5 tw-text-sm tw-font-semibold tw-text-black">
+          Upload Sample File
+        </button>
         <button @click="download_csv" type="button"
                 class="tw-rounded-lg tw-bg-hara hover:tw-bg-morehara tw-px-3.5 tw-py-1.5 tw-text-sm tw-font-semibold tw-text-black">
           Download Results
@@ -288,6 +292,7 @@ import * as XLSX from 'xlsx/xlsx.mjs';
 import {saveAs} from 'file-saver';
 import {VAceEditor} from 'vue3-ace-editor';
 import './ace-config';
+import sample_csv from '../assets/customers-100.csv?raw';
 
 export default defineComponent({
   name: 'NewIndexPage',
@@ -307,7 +312,8 @@ export default defineComponent({
       step_4: ref("Download the query result in csv format"),
       openDrawer: ref(false),
       tableNameSuggestions: ["table1", "table2", "table3"],
-      counter:0
+      counter:0,
+      sample_csv: ref(sample_csv)
     }
   },
   components: {
@@ -491,6 +497,11 @@ export default defineComponent({
       this.getStartedDialog = false,
       this.slide='step_1';
     },
+    uploadSampleFile(){
+      const blob = new Blob([this.sample_csv], { type: 'text/csv' });
+      const file = new File([blob], 'sample.csv', { type: 'text/csv' });
+      this.$refs.uploaderref.addFiles([file]);
+    }
   },
   // async beforeUnmount() {
   //   await this.$conn.close();
