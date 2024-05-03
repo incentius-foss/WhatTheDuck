@@ -21,6 +21,15 @@ uploaded data.
 - [Contributing](#contributing)
 - [License](#license)
 
+## Using docker
+
+To run the application using docker, follow these steps:
+
+```cmd
+docker-compose build
+docker-compose up
+```
+
 ## Installation
 
 To install the necessary dependencies, please follow these steps:

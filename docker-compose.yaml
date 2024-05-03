@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  quasar:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000"  # Expose Quasar app's port
