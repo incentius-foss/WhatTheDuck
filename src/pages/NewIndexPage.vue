@@ -150,7 +150,7 @@
       <!-- <div><q-btn flat color="primary" label="Filter records" class="q-ml-lg q-mt-sm" @click="search" no-caps></q-btn></div> -->
 
     </q-card-section>
-    <q-card-section class="tw-flex-1" style="max-height:671px;">
+    <q-card-section class="tw-flex-1">
       <div class="tw-flex tw-justify-end tw-mb-3 tw-gap-3">
         <button @click="uploadSampleFile" type="button"
                 class="tw-rounded-lg tw-bg-hara hover:tw-bg-morehara tw-px-3.5 tw-py-1.5 tw-text-sm tw-font-semibold tw-text-black">
@@ -167,7 +167,6 @@
         color="#101010"
         :rows="rows"
         row-key="name"
-        :rows-per-page-options="[10]"
         style=""
         class="dd-scroll tw-rounded-xl tw-border tw-border-editorborder"
       >
@@ -200,7 +199,7 @@
     </q-card-section>
     <div class="tw-flex">
       <div class="tw-flex-grow text-white">
-        Made with <q-icon name="favorite" size="xs" color="red"/> in India 
+        Made with <q-icon name="favorite" size="xs" color="red"/> in India
       </div>
       <div class="tw-flex text-white">
         <span>Powered by DuckDB </span>
@@ -209,7 +208,7 @@
         </div>
       </div>
     </div>
-    
+
     <q-dialog v-model="getStartedDialog">
       <q-card class="get-started-card tw-bg-editorborder tw-px-10">
         <img src="/welcome-duck.png" alt="duck">
