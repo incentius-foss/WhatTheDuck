@@ -321,6 +321,18 @@
                   {{ step_4 }}
                 </div>
               </q-carousel-slide>
+              <q-carousel-slide name="step_5" class="column no-wrap flex-center">
+                <!-- <q-icon name="terrain" size="56px" /> -->
+                <div class="q-mt-md text-center tw-text-hara tw-text-base">
+                  {{ step_5 }}
+                </div>
+              </q-carousel-slide>
+              <q-carousel-slide name="step_6" class="column no-wrap flex-center">
+                <!-- <q-icon name="terrain" size="56px" /> -->
+                <div class="q-mt-md text-center tw-text-hara tw-text-base">
+                  {{ step_6 }}
+                </div>
+              </q-carousel-slide>
             </q-carousel>
           </div>
           <!-- <div class="row full-width justify-center tw-text-3xl tw-font-bold">
@@ -373,6 +385,8 @@ export default defineComponent({
       step_2: "Smart editor to write SQL queries",
       step_3: "Run SQL queries to analyze data",
       step_4: "Download the query result in csv format",
+      step_5: "For Bar Chart on X axis select a column with string values and on Y axis select a column with numeric values",
+      step_6: "For Scatter Chart on X axis select a column with numeric values and on Y axis select a column with numeric values",
       openDrawer: false,
       tableNameSuggestions: ["table1", "table2", "table3"],
       counter: 0,
@@ -403,7 +417,7 @@ export default defineComponent({
     },
     shareOnTwitter() {
       try {
-        if(this.selected_chart_type === 'bar') {
+        if (this.selected_chart_type === 'bar') {
           const imageDataUrl = this.$refs.barchart.getDataURL({
             type: 'png',
             backgroundColor: '#fff',
@@ -566,7 +580,7 @@ export default defineComponent({
           return col['type'] === 'INTEGER' || col['type'] === 'BIGINT' || col['type'] === 'FLOAT' || col['type'] === 'DOUBLE' || col['type'] === 'DECIMAL'
         })
         this.string_columns = col.filter((col) => {
-          return col['type'] === 'VARCHAR' || col['type'] === 'TEXT'
+          return col['type'] === 'VARCHAR' || col['type'] === 'TEXT' || col['type'] === 'DATE' || col['type'] === 'TIMESTAMP'
         })
         this.selected_x_column = this.string_columns[0]['name']
         this.selected_y_column = this.num_columns[0]['name']
@@ -743,11 +757,11 @@ export default defineComponent({
         return col['name']
       })
     },
-    getScatterOptions(){
+    getScatterOptions() {
       let self = this;
       let data = self.rows.map((row) => {
-            return [row[self.selected_x_column], row[self.selected_y_column]]
-          })
+        return [row[self.selected_x_column], row[self.selected_y_column]]
+      })
       console.log(data)
       return {
         backgroundColor: '#0b0b0b',
@@ -835,8 +849,8 @@ export default defineComponent({
             return [row[self.selected_x_column], row[self.selected_y_column]]
           })
         }]
+      }
     }
-  }
   }
   // async beforeUnmount() {
   //   await this.$conn.close();
