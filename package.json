@@ -13,9 +13,12 @@
     "@quasar/extras": "^1.16.9",
     "ace-builds": "^1.32.8",
     "axios": "^0.21.1",
+    "echarts": "^5.5.1",
     "file-saver": "^2.0.5",
+    "numeral": "^2.0.6",
     "quasar": "^2.15.1",
     "vue": "^3.0.0",
+    "vue-echarts": "^7.0.3",
     "vue-router": "^4.0.0",
     "vue3-ace-editor": "^2.2.2",
     "xlsx": "^0.18.5"
