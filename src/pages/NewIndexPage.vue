@@ -399,7 +399,8 @@ export default defineComponent({
         {label: 'Bar', value: 'bar'},
         {label: 'Scatter', value: 'scatter'}
       ],
-      selected_chart_type: 'bar'
+      selected_chart_type: 'bar',
+      hasHeaders: true // Added checkbox state
     }
   },
   components: {
@@ -531,7 +532,7 @@ export default defineComponent({
           self.$q.loading.show();
           await self.$conn.query(`CREATE TABLE ${name} AS
           SELECT *
-          FROM read_csv_auto('sample_table.csv');`);
+          FROM read_csv_auto('sample_table.csv', HEADER=${self.hasHeaders});`);
           self.$refs.uploaderref.reset();
           self.selectTable(name);
           const stmt1 = await self.$conn.prepare(`SELECT CAST(COUNT(*) AS INT)
