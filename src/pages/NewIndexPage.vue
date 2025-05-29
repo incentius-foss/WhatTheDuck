@@ -367,6 +367,7 @@ import sample_csv from '../assets/customers-100.csv?raw';
 import * as echarts from 'echarts';
 import VueEcharts from 'vue-echarts'
 import numeral from "numeral";
+import { DuckDBDataProtocol } from '@duckdb/duckdb-wasm';
 
 export default defineComponent({
   name: 'NewIndexPage',
@@ -500,66 +501,124 @@ export default defineComponent({
     },
     async upload() {
       this.columns = []
-      let fileReader = new FileReader();
-      let text = "";
       let name = this.file.name.split(".")[0];
-      let fileType = this.file.name.split(".")[1];
-      if (fileType !== 'csv') {
+      let fileType = this.file.name.split(".")[1].toLowerCase();
+
+      if (!['csv', 'parquet'].includes(fileType)) {
         this.$refs.uploaderref.reset();
         this.$q.notify({
           type: 'negative',
-          message: `Apologies! At this moment we only support CSV file.`,
+          message: `Apologies! At this moment we only support CSV and Parquet files.`,
           position: 'top'
         });
         return
       }
+
       name = name.replace(/[^a-zA-Z0-9]/g, "_");
-      fileReader.readAsText(this.file)
       let self = this;
       let cont = true;
-      fileReader.onload = async function () {
-        text = fileReader.result
-        await self.$db.registerFileText("sample_table.csv", text);
-        self.tables.filter((table) => {
-          if (table.name == name) {
-            cont = false;
-            self.$refs.uploaderref.reset();
-            self.$q.notify({type: 'negative', message: `Table with name "${name}" Already Exists`, position: 'top'});
-          }
-        });
-        if (cont) {
-          self.$q.loading.show();
-          await self.$conn.query(`CREATE TABLE ${name} AS
-          SELECT *
-          FROM read_csv_auto('sample_table.csv');`);
-          self.$refs.uploaderref.reset();
-          self.selectTable(name);
-          const stmt1 = await self.$conn.prepare(`SELECT CAST(COUNT(*) AS INT)
-                                                  FROM ${name}`)
-          const res1 = await stmt1.query()
-          const stmt2 = await self.$conn.prepare(`SELECT COLUMN_NAME, DATA_TYPE
-                                                  FROM INFORMATION_SCHEMA.COLUMNS
-                                                  WHERE TABLE_NAME = '${name}'`)
-          const res2 = await stmt2.query()
-          let len = Object.values(JSON.parse(JSON.stringify(res1.toArray()))[0])[0]
-          let columns = JSON.parse(JSON.stringify(res2.toArray()))
-          console.log(columns)
-          self.tables.push({
-            name: name, header: 'root', toggle: false, length: len, children: columns.map((obj) => {
-              let icon = 'tag'
-              if (["BIGINT", "INTEGER"].includes(obj['data_type'])) {
-                icon = 'tag'
-              } else if (obj['data_type'] === "VARCHAR") {
-                icon = 'abc'
-              } else if (['DATE', "TIMESTAMP"].includes(obj['data_type'])) {
-                icon = 'calendar_month'
-              }
-              return {label: obj['column_name'], icon: icon, header: 'generic'}
-            })
-          })
-          self.$q.loading.hide();
-          self.counter++;
+
+      for (const table of this.tables) {
+        if (table.name === name) {
+          this.$refs.uploaderref.reset();
+          this.$q.notify({type: 'negative', message: `Table with name "${name}" Already Exists`, position: 'top'});
+          return;
         }
+      }
+
+      self.$q.loading.show();
+
+      try {
+        if (fileType === 'csv') {
+          let fileReader = new FileReader();
+          fileReader.readAsText(this.file);
+
+          fileReader.onload = async function () {
+            try {
+              const text = fileReader.result;
+              await self.$db.registerFileText("sample_table.csv", text);
+
+              await self.$conn.query(`CREATE TABLE ${name} AS
+              SELECT *
+              FROM read_csv_auto('sample_table.csv');`);
+
+              await self.processNewTable(name);
+            } catch (error) {
+              console.error('Error processing CSV:', error);
+              self.$q.notify({type: 'negative', message: `Error processing CSV file: ${error.message}`, position: 'top'});
+              self.$q.loading.hide();
+            }
+          };
+
+          fileReader.onerror = function() {
+            self.$q.notify({type: 'negative', message: 'Error reading the file', position: 'top'});
+            self.$q.loading.hide();
+          };
+        } else if (fileType === 'parquet') {
+          try {
+            await this.$db.registerFileHandle(`${name}.parquet`, this.file, DuckDBDataProtocol.BROWSER_FILEREADER, true);
+
+            await this.$conn.query(`CREATE TABLE ${name} AS
+            SELECT *
+            FROM '${name}.parquet';`);
+
+            await this.processNewTable(name);
+          } catch (error) {
+            console.error('Error processing Parquet:', error);
+            this.$q.notify({type: 'negative', message: `Error processing Parquet file: ${error.message}`, position: 'top'});
+            this.$q.loading.hide();
+          }
+        }
+      } catch (error) {
+        console.error('Error in upload:', error);
+        this.$q.notify({type: 'negative', message: `Error uploading file: ${error.message}`, position: 'top'});
+        this.$q.loading.hide();
+      }
+
+      this.$refs.uploaderref.reset();
+    },
+
+    // Helper method to process a newly created table
+    async processNewTable(name) {
+      try {
+        this.selectTable(name);
+
+        const stmt1 = await this.$conn.prepare(`SELECT CAST(COUNT(*) AS INT) FROM ${name}`);
+        const res1 = await stmt1.query();
+
+        const stmt2 = await this.$conn.prepare(`SELECT COLUMN_NAME, DATA_TYPE
+                                              FROM INFORMATION_SCHEMA.COLUMNS
+                                              WHERE TABLE_NAME = '${name}'`);
+        const res2 = await stmt2.query();
+
+        let len = Object.values(JSON.parse(JSON.stringify(res1.toArray()))[0])[0];
+        let columns = JSON.parse(JSON.stringify(res2.toArray()));
+        console.log(columns);
+
+        this.tables.push({
+          name: name,
+          header: 'root',
+          toggle: false,
+          length: len,
+          children: columns.map((obj) => {
+            let icon = 'tag';
+            if (["BIGINT", "INTEGER"].includes(obj['data_type'])) {
+              icon = 'tag';
+            } else if (obj['data_type'] === "VARCHAR") {
+              icon = 'abc';
+            } else if (['DATE', "TIMESTAMP"].includes(obj['data_type'])) {
+              icon = 'calendar_month';
+            }
+            return {label: obj['column_name'], icon: icon, header: 'generic'};
+          })
+        });
+
+        this.$q.loading.hide();
+        this.counter++;
+      } catch (error) {
+        console.error('Error processing table:', error);
+        this.$q.notify({type: 'negative', message: `Error processing table: ${error.message}`, position: 'top'});
+        this.$q.loading.hide();
       }
     },
     async search() {
