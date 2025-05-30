@@ -165,6 +165,10 @@
                 class="tw-rounded-lg tw-bg-hara hover:tw-bg-morehara tw-px-3.5 tw-py-1.5 tw-text-sm tw-font-semibold tw-text-black">
           Upload Sample File
         </button>
+        <button @click="importParquetFromUrl" type="button"
+                class="tw-rounded-lg tw-bg-hara hover:tw-bg-morehara tw-px-3.5 tw-py-1.5 tw-text-sm tw-font-semibold tw-text-black">
+          Import Parquet URL
+        </button>
         <button @click="download_csv" type="button"
                 class="tw-rounded-lg tw-bg-hara hover:tw-bg-morehara tw-px-3.5 tw-py-1.5 tw-text-sm tw-font-semibold tw-text-black">
           Download Results
@@ -268,11 +272,43 @@
       </div>
     </div>
 
+    <!-- Import Remote File URL Dialog -->
+    <q-dialog v-model="importParquetUrlDialog">
+      <q-card class="tw-bg-editorborder q-px-md" style="min-width: 400px;border-radius: 12px;">
+        <q-card-section>
+          <div class="text-h6 tw-text-primarytext">Import File from URL</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-input
+            v-model="parquetUrl"
+            outlined
+            label="Enter URL of Parquet or JSON file"
+            class="tw-bg-[#141414]"
+            dense
+            dark
+            color="hara"
+          />
+        </q-card-section>
+
+        <q-card-actions align="right" class="tw-mb-4">
+          <q-btn flat label="Cancel" no-caps class="q-mr-sm"  color="white" v-close-popup />
+          <q-btn
+            label="Import"
+            class="tw-bg-hara tw-px-20 tw-py-3 tw-font-semibold tw-rounded-lg"
+            @click="processRemoteFileUrl"
+            no-caps
+            :disable="!parquetUrl"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
     <q-dialog v-model="getStartedDialog">
       <q-card class="get-started-card tw-bg-editorborder tw-px-10">
         <img src="/welcome-duck.png" alt="duck">
-        <div class="row full-width text-center tw-text-primarytext tw-text-3xl tw-font-bold">
-          Run SQL queries on your CSV files in browser
+        <div class="row full-width text-center tw-text-primarytext tw-text-2xl tw-font-bold">
+          Run SQL queries on your CSV|Parquet files in browser
         </div>
         <q-card-section class="tw-text-primarytext" style="padding:0 20px 0 20px">
           <div>
@@ -381,8 +417,10 @@ export default defineComponent({
       tables: [], /*contains objects with keys {name, length, columns} */
       selection: '',
       getStartedDialog: false,
+      importParquetUrlDialog: false,
+      parquetUrl: '',
       slide: 'step_1',
-      step_1: 'Upload multiple csv files to run sql queries',
+      step_1: 'Upload multiple csv or parquet files to run sql queries',
       step_2: "Smart editor to write SQL queries",
       step_3: "Run SQL queries to analyze data",
       step_4: "Download the query result in csv format",
@@ -504,11 +542,11 @@ export default defineComponent({
       let name = this.file.name.split(".")[0];
       let fileType = this.file.name.split(".")[1].toLowerCase();
 
-      if (!['csv', 'parquet'].includes(fileType)) {
+      if (!['csv', 'parquet', 'json'].includes(fileType)) {
         this.$refs.uploaderref.reset();
         this.$q.notify({
           type: 'negative',
-          message: `Apologies! At this moment we only support CSV and Parquet files.`,
+          message: `Apologies! At this moment we only support CSV, Parquet, and JSON files.`,
           position: 'top'
         });
         return
@@ -579,6 +617,157 @@ export default defineComponent({
     },
 
     // Helper method to process a newly created table
+    // Open the custom dialog for importing Parquet from URL
+    importParquetFromUrl() {
+      this.parquetUrl = '';
+      this.importParquetUrlDialog = true;
+    },
+
+    // Process the remote file URL (Parquet or JSON) entered by the user
+    async processRemoteFileUrl() {
+      try {
+        if (!this.parquetUrl) return;
+
+        // Close the dialog
+        this.importParquetUrlDialog = false;
+
+        // Generate a table name from the URL
+        const urlParts = this.parquetUrl.split('/');
+        const filename = urlParts.pop();
+        const filenameParts = filename.split('.');
+        let name = filenameParts[0];
+        const fileExtension = filenameParts.length > 1 ? filenameParts.pop().toLowerCase() : '';
+        name = name.replace(/[^a-zA-Z0-9]/g, '_');
+
+        // Check if the file type is supported
+        if (!['parquet', 'csv'].includes(fileExtension)) {
+          this.$q.notify({
+            type: 'negative',
+            message: `Unsupported file type. Only Parquet and CSV files are supported for URL imports.`,
+            position: 'top'
+          });
+          return;
+        }
+
+        // Check if table with this name already exists
+        for (const table of this.tables) {
+          if (table.name === name) {
+            this.$q.notify({type: 'negative', message: `Table with name "${name}" already exists`, position: 'top'});
+            return;
+          }
+        }
+
+        this.$q.loading.show({
+          message: `Fetching ${fileExtension.toUpperCase()} file...`
+        });
+
+        try {
+          if (fileExtension === 'parquet') {
+            try {
+              // First attempt: Use direct URL registration method for Parquet files
+              await this.$db.registerFileURL(
+                `${name}.parquet`,
+                this.parquetUrl,
+                DuckDBDataProtocol.HTTP,
+                false // allowFullHttpReads
+              );
+
+              // Create a table from the registered URL Parquet file
+              await this.$conn.query(`CREATE TABLE ${name} AS
+              SELECT *
+              FROM '${name}.parquet';`);
+
+              // Process the newly created table
+              await this.processNewTable(name);
+
+              this.$q.notify({
+                type: 'positive',
+                message: `Successfully imported Parquet file from URL`,
+                position: 'top'
+              });
+
+              this.$q.loading.hide();
+              return;
+            } catch (directUrlError) {
+              console.log('Direct URL registration failed, falling back to fetch method:', directUrlError);
+              // If direct URL registration fails, fall back to fetch method
+            }
+          }
+
+          // Fallback: Try to fetch the file with the browser's fetch API
+          const response = await fetch(this.parquetUrl);
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          // Get array buffer from the response
+          const arrayBuffer = await response.arrayBuffer();
+          const uint8Array = new Uint8Array(arrayBuffer);
+
+          if (fileExtension === 'parquet') {
+            // Register the buffer with DuckDB for Parquet
+            await this.$db.registerFileBuffer(`${name}.parquet`, uint8Array);
+
+            // Create a table from the Parquet file
+            await this.$conn.query(`CREATE TABLE ${name} AS
+            SELECT *
+            FROM '${name}.parquet';`);
+          } else if (fileExtension === 'csv') {
+            // For CSV files, convert buffer to text
+            const decoder = new TextDecoder('utf-8');
+            const csvText = decoder.decode(uint8Array);
+
+            // Register the CSV file with DuckDB
+            await this.$db.registerFileText(`${name}.csv`, csvText);
+
+            // Create table from CSV file
+            await this.$conn.query(`CREATE TABLE ${name} AS
+            SELECT *
+            FROM read_csv_auto('${name}.csv');`);
+          }
+
+          // Process the newly created table
+          await this.processNewTable(name);
+
+          this.$q.notify({
+            type: 'positive',
+            message: `Successfully imported ${fileExtension.toUpperCase()} file from URL`,
+            position: 'top'
+          });
+        } catch (fetchError) {
+          console.error('Fetch error:', fetchError);
+
+          // Show a more user-friendly error message about CORS issues
+          if (fetchError.message.includes('NetworkError') ||
+              fetchError.message.includes('CORS') ||
+              fetchError.message.includes('Failed to fetch')) {
+            this.$q.notify({
+              type: 'negative',
+              message: 'The server does not allow direct access to this file due to browser security restrictions (CORS). ' +
+                   'Try downloading the file locally first and then uploading it.',
+              position: 'top',
+              timeout: 7000
+            });
+          } else {
+            this.$q.notify({
+              type: 'negative',
+              message: `Error fetching ${fileExtension.toUpperCase()} file: ${fetchError.message}`,
+              position: 'top'
+            });
+          }
+          this.$q.loading.hide();
+        }
+      } catch (error) {
+        console.error(`Error importing file from URL:`, error);
+        this.$q.notify({
+          type: 'negative',
+          message: `Error importing file: ${error.message}`,
+          position: 'top'
+        });
+        this.$q.loading.hide();
+      }
+    },
     async processNewTable(name) {
       try {
         this.selectTable(name);
@@ -588,7 +777,7 @@ export default defineComponent({
 
         const stmt2 = await this.$conn.prepare(`SELECT COLUMN_NAME, DATA_TYPE
                                               FROM INFORMATION_SCHEMA.COLUMNS
-                                              WHERE TABLE_NAME = '${name}'`);
+                                               WHERE TABLE_NAME = '${name}'`);
         const res2 = await stmt2.query();
 
         let len = Object.values(JSON.parse(JSON.stringify(res1.toArray()))[0])[0];
@@ -925,7 +1114,7 @@ export default defineComponent({
 }
 
 .get-started-card {
-  width: 29rem;
+  width: 30rem;
   height: 39rem;
   border-radius: 50px;
 }
