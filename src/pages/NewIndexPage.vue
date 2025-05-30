@@ -283,7 +283,7 @@
           <q-input
             v-model="parquetUrl"
             outlined
-            label="Enter URL of Parquet or JSON file"
+            label="Enter URL of Parquet file"
             class="tw-bg-[#141414]"
             dense
             dark
