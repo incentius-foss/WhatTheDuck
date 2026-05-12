@@ -16,6 +16,8 @@ const MANUAL_BUNDLES = {
   },
 };
 
+const OPFS_DB_PATH = 'opfs://wtd.db';
+
 export default boot(async ({app}) => {
 
 
@@ -27,10 +29,28 @@ export default boot(async ({app}) => {
   const db = new duckdb.AsyncDuckDB(logger, worker);
   await db.instantiate(bundle.mainModule, bundle.pthreadWorker);
 
+  let persistEnabled = false;
+  try {
+    persistEnabled = window.localStorage.getItem('wtd_persist') === 'true';
+  } catch (e) { /* localStorage may be blocked */ }
+
+  if (persistEnabled) {
+    try {
+      await db.open({
+        path: OPFS_DB_PATH,
+        accessMode: duckdb.DuckDBAccessMode.READ_WRITE
+      });
+    } catch (err) {
+      console.error('Failed to open OPFS-backed database, falling back to in-memory:', err);
+      persistEnabled = false;
+    }
+  }
+
   const conn = await db.connect(); // Connect to db
   app.config.globalProperties.$conn = conn
   app.config.globalProperties.$worker = worker
   app.config.globalProperties.$db = db
+  app.config.globalProperties.$persistEnabled = persistEnabled
 })
 
 // export {conn, db, worker}

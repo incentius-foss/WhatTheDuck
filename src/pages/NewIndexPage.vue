@@ -28,22 +28,22 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
             </svg>
           </div>
-          <div class="tw-w-full tw-flex tw-items-center tw-justify-between">
-            <div class="tw-w-10/12 tw-flex tw-items-center tw-cursor-pointer" @click="selectTable(table.name)">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                   stroke="currentColor" class="tw-w-5 tw-h-5 tw-mr-3"
-                   :class="selection===table.name ? 'tw-text-hara' : 'tw-text-white'">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5"/>
-              </svg>
-              <span style="width:138px;"
-                    class="tw-flex-1 tw-text-white tw-text-base tw-overflow-hidden tw-text-ellipsis">{{
-                  table.name
-                }}</span>
+          <div class="tw-flex-1 tw-min-w-0 tw-flex tw-items-center tw-cursor-pointer" @click="selectTable(table.name)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="tw-w-5 tw-h-5 tw-mr-3 tw-shrink-0"
+                 :class="selection===table.name ? 'tw-text-hara' : 'tw-text-white'">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5"/>
+            </svg>
+            <span class="tw-text-white tw-text-base tw-truncate">{{ table.name }}</span>
+          </div>
+          <div class="tw-flex tw-items-center tw-gap-2 tw-shrink-0 tw-ml-2">
+            <div @click="summarizeTable(table.name)" title="Show column stats" class="tw-cursor-pointer">
+              <q-icon name="insights" size="xs" class="tw-text-hara hover:tw-text-morehara" />
             </div>
-            <div class="tw-w-2/12" @click="deleteTable(table.name, index)">
+            <div @click="deleteTable(table.name, index)" title="Drop table" class="tw-cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                   stroke="currentColor" class="tw-w-5 tw-h-5 tw-ml-3 tw-text-red-500 hover:tw-text-red-400">
+                   stroke="currentColor" class="tw-w-5 tw-h-5 tw-text-red-500 hover:tw-text-red-400">
                 <path stroke-linecap="round" stroke-linejoin="round"
                       d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
               </svg>
@@ -117,7 +117,22 @@
         </button>
       </div>
       <div class="tw-h-10 tw-bg-editorborder tw-rounded-t-xl tw-flex tw-items-center tw-justify-between">
-        <span class="tw-text-base tw-text-white tw-ml-3 tw-font-normal">SQL Editor</span>
+        <div class="tw-flex tw-items-center tw-ml-3 tw-gap-2">
+          <span class="tw-text-base tw-text-white tw-font-normal">SQL Editor</span>
+          <q-icon name="help_outline" size="18px" class="tw-text-secondarytext hover:tw-text-primarytext tw-cursor-pointer">
+            <q-menu dark anchor="bottom left" self="top left">
+              <q-list class="tw-bg-tertiarybg tw-text-primarytext" style="min-width: 320px;">
+                <q-item-label header class="tw-text-xs tw-text-secondarytext">Keyboard shortcuts</q-item-label>
+                <q-item v-for="s in shortcutList" :key="s.label">
+                  <q-item-section class="tw-text-sm">{{ s.label }}</q-item-section>
+                  <q-item-section side>
+                    <span class="tw-text-xs tw-bg-editorborder tw-text-primarytext tw-px-2 tw-py-0.5 tw-rounded tw-border tw-border-tertiarybg" style="font-family: monospace;">{{ s.keys }}</span>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-icon>
+        </div>
         <span v-if="selection!==''" class="tw-text-base tw-text-hara tw-mr-3 tw-font-normal tw-overflow-hidden">{{
             selection
           }}</span>
@@ -141,19 +156,43 @@
         style="flex: 1 1 0%; min-height:9rem;"
       />
       <div class="tw-flex tw-border-t tw-border-editorborder">
-        <div class="tw-h-10 tw-bg-twilightbg tw-rounded-bl-xl tw-flex tw-items-center"
-             :class="$q.platform.is.desktop ? 'tw-w-10/12' : 'tw-w-9/12'">
+        <div class="tw-h-10 tw-bg-twilightbg tw-rounded-bl-xl tw-flex tw-items-center tw-gap-3 tw-px-3"
+             :class="$q.platform.is.desktop ? 'tw-w-8/12' : 'tw-w-6/12'">
+          <button type="button" @click="formatCurrentSql"
+                  class="tw-text-xs tw-text-secondarytext hover:tw-text-primarytext tw-underline">
+            Format
+          </button>
+          <button type="button" @click="runExplain"
+                  class="tw-text-xs tw-text-secondarytext hover:tw-text-primarytext tw-underline">
+            EXPLAIN
+          </button>
+          <button type="button"
+                  class="tw-text-xs tw-text-secondarytext hover:tw-text-primarytext tw-underline">
+            Extensions
+            <q-menu dark anchor="bottom left" self="top left">
+              <q-list class="tw-bg-tertiarybg tw-text-primarytext" style="min-width: 200px;">
+                <q-item v-for="ext in availableExtensions" :key="ext" clickable @click="toggleExtension(ext)">
+                  <q-item-section>{{ ext }}</q-item-section>
+                  <q-item-section side>
+                    <q-icon :name="loadedExtensions.includes(ext) ? 'check' : ''" size="xs" class="tw-text-hara" />
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </button>
         </div>
         <div @click="search"
-             class="tw-h-10 tw-bg-twilightbg hover:tw-bg-tertiarybg tw-rounded-br-xl tw-flex tw-items-center tw-justify-center tw-border-l tw-border-editorborder"
-             :class="$q.platform.is.desktop ? 'tw-w-2/12': 'tw-w-3/12'">
+             class="tw-h-10 tw-bg-twilightbg hover:tw-bg-tertiarybg tw-rounded-br-xl tw-flex tw-items-center tw-justify-center tw-border-l tw-border-editorborder tw-cursor-pointer"
+             :class="$q.platform.is.desktop ? 'tw-w-4/12' : 'tw-w-6/12'">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                stroke="currentColor" class="tw-w-6 tw-h-6 tw-text-hara">
             <path stroke-linecap="round" stroke-linejoin="round"
                   d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/>
           </svg>
           <span class="tw-text-sm tw-text-white tw-font-normal" :class="$q.platform.is.desktop ? 'tw-ml-3' : 'tw-ml-2'">Run</span>
-
+          <q-tooltip anchor="top middle" self="bottom middle" class="tw-bg-tertiarybg tw-text-primarytext">
+            {{ shortcutList[0].keys }}
+          </q-tooltip>
         </div>
       </div>
       <!-- <div><q-btn flat color="primary" label="Filter records" class="q-ml-lg q-mt-sm" @click="search" no-caps></q-btn></div> -->
@@ -161,17 +200,88 @@
     </q-card-section>
     <q-card-section class="tw-flex-1">
       <div class="tw-flex tw-justify-end tw-mb-3 tw-gap-3" v-if="view==='table'">
-        <button @click="uploadSampleFile" type="button"
+        <button type="button"
                 class="tw-rounded-lg tw-bg-hara hover:tw-bg-morehara tw-px-3.5 tw-py-1.5 tw-text-sm tw-font-semibold tw-text-black">
-          Upload Sample File
+          Sample Data ▾
+          <q-menu dark anchor="bottom left" self="top left">
+            <q-list class="tw-bg-tertiarybg tw-text-primarytext" style="min-width: 160px;">
+              <q-item clickable v-close-popup @click="loadSampleByKey('customers')">
+                <q-item-section>Customers (100 rows)</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup @click="loadSampleByKey('iris')">
+                <q-item-section>Iris (30 rows)</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup @click="loadSampleByKey('weather')">
+                <q-item-section>Weather (48 rows)</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup @click="loadSampleByKey('orders')">
+                <q-item-section>Orders (25 rows)</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </button>
+        <button @click="openPasteDialog" type="button"
+                class="tw-rounded-lg tw-bg-hara hover:tw-bg-morehara tw-px-3.5 tw-py-1.5 tw-text-sm tw-font-semibold tw-text-black">
+          Paste Data
+        </button>
+        <button type="button"
+                class="tw-rounded-lg tw-bg-hara hover:tw-bg-morehara tw-px-3.5 tw-py-1.5 tw-text-sm tw-font-semibold tw-text-black">
+          History ▾
+          <q-menu dark anchor="bottom left" self="top left">
+            <q-list class="tw-bg-tertiarybg tw-text-primarytext" style="min-width: 360px; max-width: 540px;">
+              <q-item v-if="queryHistory.length === 0">
+                <q-item-section class="tw-text-secondarytext tw-text-sm">No history yet</q-item-section>
+              </q-item>
+              <q-item v-for="(h, i) in queryHistory" :key="i" clickable v-close-popup @click="loadFromHistory(h)">
+                <q-item-section>
+                  <div class="tw-text-xs tw-truncate" style="max-width: 460px;">{{ h.sql }}</div>
+                  <div class="tw-text-xs tw-text-secondarytext">{{ formatHistoryTime(h.ts) }}</div>
+                </q-item-section>
+              </q-item>
+              <q-item v-if="queryHistory.length > 0" clickable v-close-popup @click="clearHistory">
+                <q-item-section class="tw-text-red-400 tw-text-xs">Clear history</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
         </button>
         <button @click="importParquetFromUrl" type="button"
                 class="tw-rounded-lg tw-bg-hara hover:tw-bg-morehara tw-px-3.5 tw-py-1.5 tw-text-sm tw-font-semibold tw-text-black">
           Import Parquet URL
         </button>
-        <button @click="download_csv" type="button"
+        <button type="button"
                 class="tw-rounded-lg tw-bg-hara hover:tw-bg-morehara tw-px-3.5 tw-py-1.5 tw-text-sm tw-font-semibold tw-text-black">
-          Download Results
+          Workbook ▾
+          <q-menu dark anchor="bottom right" self="top right">
+            <q-list class="tw-bg-tertiarybg tw-text-primarytext" style="min-width: 180px;">
+              <q-item clickable v-close-popup @click="exportWorkbook">
+                <q-item-section>Export workbook (.wtd)</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup @click="$refs.wbInput.click()">
+                <q-item-section>Import workbook (.wtd)</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup @click="shareQueryUrl">
+                <q-item-section>Share query URL</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </button>
+        <input ref="wbInput" type="file" accept=".wtd,.json" style="display:none" @change="onWorkbookFile" />
+        <button type="button"
+                class="tw-rounded-lg tw-bg-hara hover:tw-bg-morehara tw-px-3.5 tw-py-1.5 tw-text-sm tw-font-semibold tw-text-black">
+          Download Results ▾
+          <q-menu dark anchor="bottom right" self="top right">
+            <q-list class="tw-bg-tertiarybg tw-text-primarytext" style="min-width: 140px;">
+              <q-item clickable v-close-popup @click="exportResults('csv')">
+                <q-item-section>CSV</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup @click="exportResults('parquet')">
+                <q-item-section>Parquet</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup @click="exportResults('json')">
+                <q-item-section>JSON</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
         </button>
         <button @click="view='chart'" type="button"
                 class="tw-rounded-lg tw-bg-hara hover:tw-bg-morehara tw-px-3.5 tw-py-1.5 tw-text-sm tw-font-semibold tw-text-black">
@@ -190,11 +300,16 @@
                   class="tw-w-1/6"
                   color="yellow" dark/>
 
-        <q-select v-model="selected_x_column" :options="getXAxisOptions" label="X Axis" outlined dense
+        <q-select v-model="selected_x_column" :options="getXAxisOptions"
+                  :label="selected_chart_type === 'histogram' ? 'Column' : 'X Axis'"
+                  outlined dense
                   class="tw-w-1/6"
+                  @update:model-value="onChartAxisChange"
                   color="yellow" dark/>
-        <q-select v-model="selected_y_column" :options="getYAxisOptions" label="Y Axis" outlined dense
+        <q-select v-if="selected_chart_type !== 'histogram'"
+                  v-model="selected_y_column" :options="getYAxisOptions" label="Y Axis" outlined dense
                   class="tw-w-1/6"
+                  @update:model-value="onChartAxisChange"
                   color="yellow" dark/>
 
         <button @click="shareOnTwitter" type="button"
@@ -253,10 +368,24 @@
                   :option="getBarOptions" :autoresize="true"
                   style="height: 400px"></VueEcharts>
 
+      <VueEcharts v-if="view==='chart' && selected_chart_type==='line'" class="card_style22" ref="linechart"
+                  :option="getLineOptions" :autoresize="true"
+                  style="height: 400px"></VueEcharts>
+
       <VueEcharts v-if="view==='chart' && selected_chart_type==='scatter'" class="card_style2" ref="scatterchart"
                   :option="getScatterOptions" :autoresize="true"
                   style="height: 400px"></VueEcharts>
 
+      <VueEcharts v-if="view==='chart' && selected_chart_type==='histogram'" class="card_style22" ref="histchart"
+                  :option="getHistogramOptions" :autoresize="true"
+                  style="height: 400px"></VueEcharts>
+
+      <div v-if="lastRowCount !== null"
+           class="tw-flex tw-justify-end tw-gap-4 tw-mt-2 tw-text-xs tw-text-secondarytext">
+        <span>{{ lastRowCount }} rows</span>
+        <span>{{ lastColCount }} cols</span>
+        <span>{{ lastDurationMs }} ms</span>
+      </div>
     </q-card-section>
     <div class="tw-flex">
       <div class="tw-flex-grow text-white">
@@ -304,6 +433,68 @@
       </q-card>
     </q-dialog>
 
+    <!-- Paste data dialog -->
+    <q-dialog v-model="pasteDialog">
+      <q-card class="tw-bg-editorborder q-px-md" style="min-width: 480px;border-radius: 12px;">
+        <q-card-section>
+          <div class="text-h6 tw-text-primarytext">Paste CSV data</div>
+          <div class="tw-text-secondarytext tw-text-xs tw-mt-1">Paste comma-separated values below. First row is treated as the header.</div>
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+          <q-input v-model="pasteTableName" dense dark outlined label="Table name" color="hara" class="tw-mb-3" />
+          <q-input v-model="pasteText" type="textarea" dense dark outlined autogrow color="hara"
+                   input-style="min-height: 200px;" placeholder="a,b,c
+1,2,3
+4,5,6" />
+        </q-card-section>
+        <q-card-actions align="right" class="tw-mb-4">
+          <q-btn flat label="Cancel" no-caps class="q-mr-sm" color="white" v-close-popup />
+          <q-btn label="Import" no-caps :disable="!pasteText || !pasteTableName"
+                 class="tw-bg-hara tw-px-20 tw-py-3 tw-font-semibold tw-rounded-lg"
+                 @click="confirmPaste" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <!-- CSV header dialog -->
+    <q-dialog v-model="csvHeaderDialog" persistent>
+      <q-card class="tw-bg-editorborder q-px-md" style="min-width: 400px;border-radius: 12px;">
+        <q-card-section>
+          <div class="text-h6 tw-text-primarytext">Import CSV</div>
+          <div v-if="pendingCsvImport" class="tw-text-secondarytext tw-text-sm tw-mt-1">
+            {{ pendingCsvImport.type === 'url' ? pendingCsvImport.url : pendingCsvImport.file.name }}
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <div class="tw-text-primarytext tw-mb-3">
+            Does the first row contain column headers?
+          </div>
+          <div class="tw-text-primarytext csv-header-options">
+            <q-option-group
+              v-model="csvHasHeaders"
+              :options="[
+                { label: 'Yes — first row is column names', value: true },
+                { label: 'No — generate column names (column0, column1, ...)', value: false }
+              ]"
+              color="hara"
+              dark
+            />
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right" class="tw-mb-4">
+          <q-btn flat label="Cancel" no-caps class="q-mr-sm" color="white" @click="cancelCsvImport" />
+          <q-btn
+            label="Import"
+            class="tw-bg-hara tw-px-20 tw-py-3 tw-font-semibold tw-rounded-lg"
+            @click="confirmCsvImport"
+            no-caps
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
     <q-dialog v-model="getStartedDialog">
       <q-card class="get-started-card tw-bg-editorborder tw-px-10">
         <img src="/welcome-duck.png" alt="duck">
@@ -325,7 +516,7 @@
               navigation
               padding
               arrows
-              height="200px"
+              height="160px"
               class="tw-bg-editorborder text-white rounded-borders"
             >
               <template v-slot:navigation-icon="{ active, btnProps, onClick }">
@@ -371,17 +562,21 @@
               </q-carousel-slide>
             </q-carousel>
           </div>
-          <!-- <div class="row full-width justify-center tw-text-3xl tw-font-bold">
-            Welcome!  🎉
-          </div> -->
-          <!-- <div class="row full-width justify-center tw-text-lg tw-mt-6">
-            Unlock the power of lightning-fast analytics and data
+          <div class="tw-flex tw-items-center tw-justify-between tw-mt-2 tw-px-2">
+            <div class="tw-pr-4">
+              <div class="tw-text-sm tw-text-primarytext">Keep my data between sessions</div>
+              <div class="tw-text-xs tw-text-secondarytext">Persists tables to your browser's OPFS storage</div>
+            </div>
+            <q-toggle v-model="persistEnabled" color="hara" @update:model-value="togglePersist" dark />
           </div>
-          <div class="row full-width justify-center tw-text-lg">
-            processing with QuackDB, your ultimate data tool.
-          </div> -->
+          <div v-if="persistEnabled && tables.length > 0" class="tw-text-right tw-mt-1 tw-px-2">
+            <button type="button" @click="clearAllData"
+                    class="tw-text-xs tw-text-red-400 hover:tw-text-red-300 tw-underline">
+              Clear my stored data
+            </button>
+          </div>
         </q-card-section>
-        <q-card-actions class="justify-center tw-pb-lg">
+        <q-card-actions class="justify-center tw-pb-xl q-mb-sm tw-pt-sm">
           <button
             @click="getStarted()"
             class="tw-bg-hara  tw-px-20 tw-py-3 tw-font-semibold tw-rounded-lg">
@@ -395,11 +590,13 @@
 
 <script>
 import {defineComponent, ref} from 'vue'
-import * as XLSX from 'xlsx/xlsx.mjs';
 import {saveAs} from 'file-saver';
 import {VAceEditor} from 'vue3-ace-editor';
 import './ace-config';
 import sample_csv from '../assets/customers-100.csv?raw';
+import iris_csv from '../assets/iris.csv?raw';
+import weather_csv from '../assets/weather.csv?raw';
+import orders_csv from '../assets/orders.csv?raw';
 import * as echarts from 'echarts';
 import VueEcharts from 'vue-echarts'
 import numeral from "numeral";
@@ -436,9 +633,35 @@ export default defineComponent({
       selected_y_column: '',
       chartTypes: [
         {label: 'Bar', value: 'bar'},
-        {label: 'Scatter', value: 'scatter'}
+        {label: 'Line', value: 'line'},
+        {label: 'Scatter', value: 'scatter'},
+        {label: 'Histogram', value: 'histogram'}
       ],
-      selected_chart_type: 'bar'
+      selected_chart_type: 'bar',
+      csvHeaderDialog: false,
+      csvHasHeaders: true,
+      pendingCsvImport: null,
+      persistEnabled: false,
+      queryHistory: [],
+      openHistoryMenu: false,
+      lastRowCount: null,
+      lastColCount: null,
+      lastDurationMs: null,
+      pasteDialog: false,
+      pasteText: '',
+      pasteTableName: '',
+      availableExtensions: ['spatial', 'inet', 'icu', 'fts'],
+      loadedExtensions: [],
+      shortcutList: (() => {
+        const mac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform || '');
+        const mod = mac ? '⌘' : 'Ctrl';
+        return [
+          {label: 'Run current query', keys: `${mod} + Enter`},
+          {label: 'Run only selected SQL', keys: `select then ${mod} + Enter`},
+          {label: 'Format SQL', keys: `${mod} + Shift + F`},
+          {label: 'Toggle line comment', keys: `${mod} + /`}
+        ];
+      })()
     }
   },
   components: {
@@ -449,53 +672,64 @@ export default defineComponent({
     this.openPopUp();
     this.$bus.on('openPopUp', this.openPopUp)
     this.openDrawer = this.$q.platform.is.desktop ? true : false;
+    this.persistEnabled = !!this.$persistEnabled;
+    if (this.persistEnabled) {
+      await this.restoreTables();
+    }
+    try {
+      const raw = window.localStorage.getItem('wtd_history');
+      this.queryHistory = raw ? JSON.parse(raw) : [];
+    } catch (e) { this.queryHistory = []; }
+    this.loadFromHash();
   },
   methods: {
     chartChange() {
-      this.selected_x_column = this.getXAxisOptions[0]
+      this.selected_x_column = this.getXAxisOptions[0];
+      if (this.selected_chart_type !== 'histogram' && this.num_columns.length > 0) {
+        this.selected_y_column = this.num_columns[0].name;
+      }
+      this.saveChartConfig();
+    },
+    onChartAxisChange() {
+      this.saveChartConfig();
+    },
+    loadChartConfig(name) {
+      try {
+        const raw = window.localStorage.getItem('wtd_chart_config');
+        const all = raw ? JSON.parse(raw) : {};
+        return all[name] || null;
+      } catch (e) { return null; }
+    },
+    saveChartConfig() {
+      if (!this.selection) return;
+      try {
+        const raw = window.localStorage.getItem('wtd_chart_config');
+        const all = raw ? JSON.parse(raw) : {};
+        all[this.selection] = {
+          chart_type: this.selected_chart_type,
+          x: this.selected_x_column,
+          y: this.selected_y_column
+        };
+        window.localStorage.setItem('wtd_chart_config', JSON.stringify(all));
+      } catch (e) {}
     },
     shareOnTwitter() {
       try {
-        if (this.selected_chart_type === 'bar') {
-          const imageDataUrl = this.$refs.barchart.getDataURL({
-            type: 'png',
-            backgroundColor: '#fff',
-            pixelRatio: 2
-          });
-
-          // Download the image file for uploading on Twitter
-          const link = document.createElement("a");
-          link.href = imageDataUrl;
-          link.download = "result.png";
-          link.click();
-        } else {
-          const imageDataUrl = this.$refs.scatterchart.getDataURL({
-            type: 'png',
-            backgroundColor: '#fff',
-            pixelRatio: 2
-          });
-
-          // Download the image file for uploading on Twitter
-          const link = document.createElement("a");
-          link.href = imageDataUrl;
-          link.download = "result.png";
-          link.click();
-        }
-        // const imageDataUrl = this.$refs.barchart.getDataURL({
-        //   type: 'png',
-        //   backgroundColor: '#fff',
-        //   pixelRatio: 2
-        // });
-        //
-        // // Download the image file for uploading on Twitter
-        // const link = document.createElement("a");
-        // link.href = imageDataUrl;
-        // link.download = "result.png";
-        // link.click();
-
-        // Open Twitter share chart
+        const refMap = {
+          bar: 'barchart',
+          line: 'linechart',
+          scatter: 'scatterchart',
+          histogram: 'histchart'
+        };
+        const chartRef = this.$refs[refMap[this.selected_chart_type]];
+        if (!chartRef) return;
+        const imageDataUrl = chartRef.getDataURL({type: 'png', backgroundColor: '#fff', pixelRatio: 2});
+        const link = document.createElement('a');
+        link.href = imageDataUrl;
+        link.download = 'result.png';
+        link.click();
       } catch (error) {
-        console.error("Error capturing chart image: ", error);
+        console.error('Error capturing chart image: ', error);
       }
     },
     initializeEditor(editor) {
@@ -526,35 +760,68 @@ export default defineComponent({
         });
         return item
       })
+      editor.commands.addCommand({
+        name: 'runQuery',
+        bindKey: {win: 'Ctrl-Enter', mac: 'Command-Enter'},
+        exec: () => self.search()
+      });
+      editor.commands.addCommand({
+        name: 'formatSql',
+        bindKey: {win: 'Ctrl-Shift-F', mac: 'Command-Shift-F'},
+        exec: () => self.formatCurrentSql()
+      });
     },
-    selectTable(name) {
-      this.selection = name
+    async selectTable(name) {
+      this.selection = name;
+      const tbl = this.tables.find(t => t.name === name);
+      const ref = (tbl && tbl.sqlRef) ? tbl.sqlRef : name;
       this.query = `SELECT *
-                    FROM ${name} LIMIT 10;`
-      this.search();
+                    FROM ${ref} LIMIT 10;`
+      await this.search();
+      const cfg = this.loadChartConfig(name);
+      if (cfg) {
+        if (cfg.chart_type) this.selected_chart_type = cfg.chart_type;
+        if (cfg.x) this.selected_x_column = cfg.x;
+        if (cfg.y) this.selected_y_column = cfg.y;
+      }
     },
-    files(files) {
-      this.file = files[0];
-      this.upload();
+    async files(files) {
+      if (!files || files.length === 0) return;
+      const batch = files.length > 1;
+      for (const f of files) {
+        this.file = f;
+        await this.upload(batch);
+      }
     },
-    async upload() {
+    parseFileMeta(filename) {
+      const parts = filename.split('.');
+      let baseName = parts[0] || 'data';
+      let last = (parts[parts.length - 1] || '').toLowerCase();
+      let fileType = last;
+      let isGzipped = false;
+      if ((last === 'gz' || last === 'gzip') && parts.length >= 3) {
+        isGzipped = true;
+        fileType = (parts[parts.length - 2] || '').toLowerCase();
+      }
+      const name = baseName.replace(/[^a-zA-Z0-9]/g, '_');
+      return {name, fileType, isGzipped};
+    },
+    async upload(batchMode = false) {
       this.columns = []
-      let name = this.file.name.split(".")[0];
-      let fileType = this.file.name.split(".")[1].toLowerCase();
+      const {name, fileType, isGzipped} = this.parseFileMeta(this.file.name);
 
-      if (!['csv', 'parquet', 'json'].includes(fileType)) {
+      const allowed = ['csv', 'parquet', 'json', 'xlsx', 'xls', 'duckdb'];
+      if (!allowed.includes(fileType)) {
         this.$refs.uploaderref.reset();
         this.$q.notify({
           type: 'negative',
-          message: `Apologies! At this moment we only support CSV, Parquet, and JSON files.`,
+          message: `Unsupported file type ".${fileType}". Supported: CSV, Parquet, JSON, Excel, DuckDB (with optional .gz for CSV/JSON).`,
           position: 'top'
         });
         return
       }
 
-      name = name.replace(/[^a-zA-Z0-9]/g, "_");
       let self = this;
-      let cont = true;
 
       for (const table of this.tables) {
         if (table.name === name) {
@@ -564,48 +831,50 @@ export default defineComponent({
         }
       }
 
+      if (fileType === 'csv') {
+        if (batchMode) {
+          await this.ingestCsvFromFile(this.file, name, true, isGzipped);
+        } else {
+          this.pendingCsvImport = { type: 'file', file: this.file, name, gzipped: isGzipped };
+          this.csvHasHeaders = true;
+          this.csvHeaderDialog = true;
+        }
+        this.$refs.uploaderref.reset();
+        return;
+      }
+
+      if (fileType === 'xlsx' || fileType === 'xls') {
+        await this.ingestExcelFile(this.file, name);
+        this.$refs.uploaderref.reset();
+        return;
+      }
+
       self.$q.loading.show();
 
       try {
-        if (fileType === 'csv') {
-          let fileReader = new FileReader();
-          fileReader.readAsText(this.file);
-
-          fileReader.onload = async function () {
-            try {
-              const text = fileReader.result;
-              await self.$db.registerFileText("sample_table.csv", text);
-
-              await self.$conn.query(`CREATE TABLE ${name} AS
-              SELECT *
-              FROM read_csv_auto('sample_table.csv');`);
-
-              await self.processNewTable(name);
-            } catch (error) {
-              console.error('Error processing CSV:', error);
-              self.$q.notify({type: 'negative', message: `Error processing CSV file: ${error.message}`, position: 'top'});
-              self.$q.loading.hide();
-            }
-          };
-
-          fileReader.onerror = function() {
-            self.$q.notify({type: 'negative', message: 'Error reading the file', position: 'top'});
-            self.$q.loading.hide();
-          };
-        } else if (fileType === 'parquet') {
+        if (fileType === 'parquet') {
           try {
             await this.$db.registerFileHandle(`${name}.parquet`, this.file, DuckDBDataProtocol.BROWSER_FILEREADER, true);
-
-            await this.$conn.query(`CREATE TABLE ${name} AS
-            SELECT *
-            FROM '${name}.parquet';`);
-
+            await this.$conn.query(`CREATE TABLE ${name} AS SELECT * FROM '${name}.parquet';`);
             await this.processNewTable(name);
           } catch (error) {
             console.error('Error processing Parquet:', error);
             this.$q.notify({type: 'negative', message: `Error processing Parquet file: ${error.message}`, position: 'top'});
             this.$q.loading.hide();
           }
+        } else if (fileType === 'json') {
+          try {
+            const ext = isGzipped ? 'json.gz' : 'json';
+            await this.$db.registerFileHandle(`${name}.${ext}`, this.file, DuckDBDataProtocol.BROWSER_FILEREADER, true);
+            await this.$conn.query(`CREATE TABLE ${name} AS SELECT * FROM read_json_auto('${name}.${ext}');`);
+            await this.processNewTable(name);
+          } catch (error) {
+            console.error('Error processing JSON:', error);
+            this.$q.notify({type: 'negative', message: `Error processing JSON file: ${error.message}`, position: 'top'});
+            this.$q.loading.hide();
+          }
+        } else if (fileType === 'duckdb') {
+          await this.ingestDuckdbFile(this.file, name);
         }
       } catch (error) {
         console.error('Error in upload:', error);
@@ -614,6 +883,82 @@ export default defineComponent({
       }
 
       this.$refs.uploaderref.reset();
+    },
+    async ingestExcelFile(file, name) {
+      this.$q.loading.show({message: 'Reading Excel file...'});
+      try {
+        const XLSX = await import('xlsx');
+        const buf = await file.arrayBuffer();
+        const wb = XLSX.read(buf, {type: 'array'});
+        const sheetName = wb.SheetNames[0];
+        if (!sheetName) throw new Error('Workbook contains no sheets');
+        const csvText = XLSX.utils.sheet_to_csv(wb.Sheets[sheetName]);
+        const csvBlob = new Blob([csvText], {type: 'text/csv'});
+        const csvFile = new File([csvBlob], `${name}.csv`, {type: 'text/csv'});
+        this.$q.loading.hide();
+        this.pendingCsvImport = {type: 'file', file: csvFile, name, gzipped: false};
+        this.csvHasHeaders = true;
+        this.csvHeaderDialog = true;
+      } catch (err) {
+        this.$q.loading.hide();
+        this.$q.notify({type: 'negative', message: `Excel import failed: ${err.message}`, position: 'top'});
+      }
+    },
+    async ingestDuckdbFile(file, name) {
+      try {
+        const dbFile = `${name}.duckdb`;
+        await this.$db.registerFileHandle(dbFile, file, DuckDBDataProtocol.BROWSER_FILEREADER, true);
+        await this.$conn.query(`ATTACH '${dbFile}' AS ${name} (READ_ONLY);`);
+        await this.listAttachedDatabaseTables(name);
+        this.$q.notify({type: 'positive', message: `Attached DuckDB database "${name}"`, position: 'top'});
+        this.$q.loading.hide();
+        this.counter++;
+      } catch (error) {
+        console.error('Error attaching DuckDB:', error);
+        this.$q.notify({type: 'negative', message: `DuckDB attach failed: ${error.message}`, position: 'top'});
+        this.$q.loading.hide();
+      }
+    },
+    async listAttachedDatabaseTables(catalog) {
+      const r = await this.$conn.query(
+        `SELECT table_schema, table_name FROM information_schema.tables WHERE table_catalog = '${catalog}';`
+      );
+      const rows = JSON.parse(JSON.stringify(r.toArray()));
+      for (const row of rows) {
+        const schema = row.table_schema || 'main';
+        const tname = row.table_name;
+        const displayName = `${catalog}.${tname}`;
+        const sqlRef = `${catalog}.${schema}.${tname}`;
+        await this.addAttachedTableToList(displayName, sqlRef, catalog, schema, tname);
+      }
+    },
+    async addAttachedTableToList(displayName, sqlRef, catalog, schema, tname) {
+      const replacer = (k, v) => typeof v === 'bigint' ? v.toString() : v;
+      try {
+        const r1 = await this.$conn.query(`SELECT CAST(COUNT(*) AS INT) AS c FROM ${sqlRef};`);
+        const r2 = await this.$conn.query(
+          `SELECT column_name, data_type FROM information_schema.columns WHERE table_catalog='${catalog}' AND table_schema='${schema}' AND table_name='${tname}';`
+        );
+        const len = JSON.parse(JSON.stringify(r1.toArray(), replacer))[0].c;
+        const columns = JSON.parse(JSON.stringify(r2.toArray(), replacer));
+        this.tables.push({
+          name: displayName,
+          sqlRef: sqlRef,
+          header: 'root',
+          toggle: false,
+          length: len,
+          attached: true,
+          children: columns.map((obj) => ({
+            label: obj.column_name,
+            icon: ['BIGINT','INTEGER'].includes(obj.data_type) ? 'tag'
+                : obj.data_type === 'VARCHAR' ? 'abc'
+                : ['DATE','TIMESTAMP'].includes(obj.data_type) ? 'calendar_month' : 'tag',
+            header: 'generic'
+          }))
+        });
+      } catch (e) {
+        console.warn('Failed to add attached table:', displayName, e);
+      }
     },
 
     // Helper method to process a newly created table
@@ -640,10 +985,10 @@ export default defineComponent({
         name = name.replace(/[^a-zA-Z0-9]/g, '_');
 
         // Check if the file type is supported
-        if (!['parquet', 'csv'].includes(fileExtension)) {
+        if (!['parquet', 'csv', 'json'].includes(fileExtension)) {
           this.$q.notify({
             type: 'negative',
-            message: `Unsupported file type. Only Parquet and CSV files are supported for URL imports.`,
+            message: `Unsupported file type. Only Parquet, CSV and JSON files are supported for URL imports.`,
             position: 'top'
           });
           return;
@@ -655,6 +1000,13 @@ export default defineComponent({
             this.$q.notify({type: 'negative', message: `Table with name "${name}" already exists`, position: 'top'});
             return;
           }
+        }
+
+        if (fileExtension === 'csv') {
+          this.pendingCsvImport = { type: 'url', url: this.parquetUrl, name };
+          this.csvHasHeaders = true;
+          this.csvHeaderDialog = true;
+          return;
         }
 
         this.$q.loading.show({
@@ -706,25 +1058,15 @@ export default defineComponent({
           const uint8Array = new Uint8Array(arrayBuffer);
 
           if (fileExtension === 'parquet') {
-            // Register the buffer with DuckDB for Parquet
             await this.$db.registerFileBuffer(`${name}.parquet`, uint8Array);
-
-            // Create a table from the Parquet file
             await this.$conn.query(`CREATE TABLE ${name} AS
             SELECT *
             FROM '${name}.parquet';`);
-          } else if (fileExtension === 'csv') {
-            // For CSV files, convert buffer to text
-            const decoder = new TextDecoder('utf-8');
-            const csvText = decoder.decode(uint8Array);
-
-            // Register the CSV file with DuckDB
-            await this.$db.registerFileText(`${name}.csv`, csvText);
-
-            // Create table from CSV file
+          } else if (fileExtension === 'json') {
+            await this.$db.registerFileBuffer(`${name}.json`, uint8Array);
             await this.$conn.query(`CREATE TABLE ${name} AS
             SELECT *
-            FROM read_csv_auto('${name}.csv');`);
+            FROM read_json_auto('${name}.json');`);
           }
 
           // Process the newly created table
@@ -768,40 +1110,127 @@ export default defineComponent({
         this.$q.loading.hide();
       }
     },
+    cancelCsvImport() {
+      this.csvHeaderDialog = false;
+      this.pendingCsvImport = null;
+    },
+    async confirmCsvImport() {
+      if (!this.pendingCsvImport) {
+        this.csvHeaderDialog = false;
+        return;
+      }
+      const pending = this.pendingCsvImport;
+      const hasHeaders = this.csvHasHeaders;
+      this.csvHeaderDialog = false;
+      this.pendingCsvImport = null;
+
+      if (pending.type === 'file') {
+        await this.ingestCsvFromFile(pending.file, pending.name, hasHeaders, !!pending.gzipped);
+      } else {
+        await this.ingestCsvFromUrl(pending.url, pending.name, hasHeaders);
+      }
+    },
+    async ingestCsvFromFile(file, name, hasHeaders, gzipped) {
+      const self = this;
+      self.$q.loading.show();
+      if (gzipped) {
+        try {
+          const ext = 'csv.gz';
+          const regName = `${name}.${ext}`;
+          await self.$db.registerFileHandle(regName, file, DuckDBDataProtocol.BROWSER_FILEREADER, true);
+          await self.$conn.query(`CREATE TABLE ${name} AS SELECT * FROM read_csv_auto('${regName}', header=${hasHeaders});`);
+          await self.processNewTable(name);
+        } catch (error) {
+          console.error('Error processing gzipped CSV:', error);
+          self.$q.notify({type: 'negative', message: `Error processing CSV.gz: ${error.message}`, position: 'top'});
+          self.$q.loading.hide();
+        }
+        return;
+      }
+      const fileReader = new FileReader();
+      fileReader.onload = async function () {
+        try {
+          await self.$db.registerFileText('sample_table.csv', fileReader.result);
+          await self.$conn.query(`CREATE TABLE ${name} AS
+          SELECT *
+          FROM read_csv_auto('sample_table.csv', header=${hasHeaders});`);
+          await self.processNewTable(name);
+        } catch (error) {
+          console.error('Error processing CSV:', error);
+          self.$q.notify({type: 'negative', message: `Error processing CSV file: ${error.message}`, position: 'top'});
+          self.$q.loading.hide();
+        }
+      };
+      fileReader.onerror = function () {
+        self.$q.notify({type: 'negative', message: 'Error reading the file', position: 'top'});
+        self.$q.loading.hide();
+      };
+      fileReader.readAsText(file);
+    },
+    async ingestCsvFromUrl(url, name, hasHeaders) {
+      this.$q.loading.show({message: 'Fetching CSV file...'});
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const arrayBuffer = await response.arrayBuffer();
+        const csvText = new TextDecoder('utf-8').decode(new Uint8Array(arrayBuffer));
+        await this.$db.registerFileText(`${name}.csv`, csvText);
+        await this.$conn.query(`CREATE TABLE ${name} AS
+        SELECT *
+        FROM read_csv_auto('${name}.csv', header=${hasHeaders});`);
+        await this.processNewTable(name);
+        this.$q.notify({type: 'positive', message: 'Successfully imported CSV file from URL', position: 'top'});
+      } catch (fetchError) {
+        console.error('Fetch error:', fetchError);
+        if (fetchError.message.includes('NetworkError') ||
+            fetchError.message.includes('CORS') ||
+            fetchError.message.includes('Failed to fetch')) {
+          this.$q.notify({
+            type: 'negative',
+            message: 'The server does not allow direct access to this file due to browser security restrictions (CORS). ' +
+              'Try downloading the file locally first and then uploading it.',
+            position: 'top',
+            timeout: 7000
+          });
+        } else {
+          this.$q.notify({type: 'negative', message: `Error fetching CSV file: ${fetchError.message}`, position: 'top'});
+        }
+        this.$q.loading.hide();
+      }
+    },
+    async addTableToList(name) {
+      const stmt1 = await this.$conn.prepare(`SELECT CAST(COUNT(*) AS INT) FROM ${name}`);
+      const res1 = await stmt1.query();
+      const stmt2 = await this.$conn.prepare(`SELECT COLUMN_NAME, DATA_TYPE
+                                              FROM INFORMATION_SCHEMA.COLUMNS
+                                              WHERE TABLE_NAME = '${name}'`);
+      const res2 = await stmt2.query();
+      const len = Object.values(JSON.parse(JSON.stringify(res1.toArray()))[0])[0];
+      const columns = JSON.parse(JSON.stringify(res2.toArray()));
+      this.tables.push({
+        name: name,
+        header: 'root',
+        toggle: false,
+        length: len,
+        children: columns.map((obj) => {
+          let icon = 'tag';
+          if (["BIGINT", "INTEGER"].includes(obj['data_type'])) {
+            icon = 'tag';
+          } else if (obj['data_type'] === "VARCHAR") {
+            icon = 'abc';
+          } else if (['DATE', "TIMESTAMP"].includes(obj['data_type'])) {
+            icon = 'calendar_month';
+          }
+          return {label: obj['column_name'], icon: icon, header: 'generic'};
+        })
+      });
+    },
     async processNewTable(name) {
       try {
         this.selectTable(name);
-
-        const stmt1 = await this.$conn.prepare(`SELECT CAST(COUNT(*) AS INT) FROM ${name}`);
-        const res1 = await stmt1.query();
-
-        const stmt2 = await this.$conn.prepare(`SELECT COLUMN_NAME, DATA_TYPE
-                                              FROM INFORMATION_SCHEMA.COLUMNS
-                                               WHERE TABLE_NAME = '${name}'`);
-        const res2 = await stmt2.query();
-
-        let len = Object.values(JSON.parse(JSON.stringify(res1.toArray()))[0])[0];
-        let columns = JSON.parse(JSON.stringify(res2.toArray()));
-        console.log(columns);
-
-        this.tables.push({
-          name: name,
-          header: 'root',
-          toggle: false,
-          length: len,
-          children: columns.map((obj) => {
-            let icon = 'tag';
-            if (["BIGINT", "INTEGER"].includes(obj['data_type'])) {
-              icon = 'tag';
-            } else if (obj['data_type'] === "VARCHAR") {
-              icon = 'abc';
-            } else if (['DATE', "TIMESTAMP"].includes(obj['data_type'])) {
-              icon = 'calendar_month';
-            }
-            return {label: obj['column_name'], icon: icon, header: 'generic'};
-          })
-        });
-
+        await this.addTableToList(name);
         this.$q.loading.hide();
         this.counter++;
       } catch (error) {
@@ -810,31 +1239,116 @@ export default defineComponent({
         this.$q.loading.hide();
       }
     },
-    async search() {
-      this.$q.loading.show();
+    async restoreTables() {
       try {
-        const q = await this.$conn.prepare(this.query);
-        const r = await q.query();
-        const replacer = (key, value) => {
-          if (typeof value === 'bigint') {
-            return value.toString(); // Convert BigInt to string representation
-          }
-          return value;
-        };
-        this.rows = JSON.parse(JSON.stringify(r.toArray(), replacer))
-        let columns = await this.$conn.query(`PRAGMA table_info(${this.selection});`);
-        let col = JSON.parse(JSON.stringify(columns.toArray(), replacer))
-        this.num_columns = col.filter((col) => {
-          return col['type'] === 'INTEGER' || col['type'] === 'BIGINT' || col['type'] === 'FLOAT' || col['type'] === 'DOUBLE' || col['type'] === 'DECIMAL'
-        })
-        this.string_columns = col.filter((col) => {
-          return col['type'] === 'VARCHAR' || col['type'] === 'TEXT' || col['type'] === 'DATE' || col['type'] === 'TIMESTAMP'
-        })
-        this.selected_x_column = this.string_columns[0]['name']
-        this.selected_y_column = this.num_columns[0]['name']
-        this.$q.loading.hide();
+        const r = await this.$conn.query('SHOW TABLES;');
+        const names = JSON.parse(JSON.stringify(r.toArray())).map(row => row.name);
+        for (const name of names) {
+          await this.addTableToList(name);
+        }
+        this.counter++;
       } catch (err) {
-        this.$q.loading.hide();
+        console.error('Failed to restore tables:', err);
+      }
+    },
+    togglePersist(value) {
+      try {
+        if (value) {
+          window.localStorage.setItem('wtd_persist', 'true');
+        } else {
+          window.localStorage.removeItem('wtd_persist');
+        }
+      } catch (e) {
+        this.$q.notify({type: 'negative', message: 'Could not save preference (storage blocked)', position: 'top'});
+        return;
+      }
+      this.$q.notify({
+        type: 'info',
+        color: 'primary',
+        message: value
+          ? 'Persistence will activate after you reload the page.'
+          : 'Persistence will be off after you reload the page.',
+        position: 'top',
+        timeout: 5000,
+        actions: [{label: 'Reload', color: 'white', handler: () => window.location.reload()}]
+      });
+    },
+    async clearAllData() {
+      if (!window.confirm('Drop all stored tables? This cannot be undone.')) return;
+      try {
+        const r = await this.$conn.query('SHOW TABLES;');
+        const names = JSON.parse(JSON.stringify(r.toArray())).map(row => row.name);
+        for (const name of names) {
+          await this.$conn.query(`DROP TABLE IF EXISTS ${name};`);
+        }
+        this.tables = [];
+        this.selection = '';
+        this.query = '';
+        this.rows = [];
+        this.counter++;
+        this.$q.notify({type: 'positive', message: 'All tables dropped', position: 'top'});
+      } catch (err) {
+        this.$q.notify({type: 'negative', message: `Clear failed: ${err.message}`, position: 'top'});
+      }
+    },
+    splitSql(sql) {
+      const stmts = [];
+      let cur = '';
+      let inSingle = false, inDouble = false;
+      for (let i = 0; i < sql.length; i++) {
+        const c = sql[i];
+        if (c === "'" && !inDouble) inSingle = !inSingle;
+        else if (c === '"' && !inSingle) inDouble = !inDouble;
+        if (c === ';' && !inSingle && !inDouble) {
+          const t = cur.trim();
+          if (t) stmts.push(t);
+          cur = '';
+          continue;
+        }
+        cur += c;
+      }
+      const t = cur.trim();
+      if (t) stmts.push(t);
+      return stmts;
+    },
+    async search() {
+      let selected = '';
+      try {
+        const aceEl = document.querySelector('.ace_editor');
+        if (aceEl && window.ace && window.ace.edit) {
+          selected = window.ace.edit(aceEl).getSelectedText() || '';
+        }
+      } catch (e) { /* ignore */ }
+      const sql = (selected && selected.trim()) ? selected : this.query;
+      if (!sql || !sql.trim()) return;
+      const statements = this.splitSql(sql);
+      if (statements.length === 0) return;
+      this.$q.loading.show();
+      const start = performance.now();
+      try {
+        let lastResult = null;
+        for (const stmt of statements) {
+          const q = await this.$conn.prepare(stmt);
+          lastResult = await q.query();
+        }
+        const replacer = (key, value) => typeof value === 'bigint' ? value.toString() : value;
+        this.rows = lastResult ? JSON.parse(JSON.stringify(lastResult.toArray(), replacer)) : [];
+        this.lastRowCount = this.rows.length;
+        this.lastColCount = this.rows.length > 0 ? Object.keys(this.rows[0]).length : 0;
+        this.lastDurationMs = Math.round(performance.now() - start);
+        this.pushHistory(sql);
+
+        if (this.selection) {
+          try {
+            const columns = await this.$conn.query(`PRAGMA table_info(${this.selection});`);
+            const col = JSON.parse(JSON.stringify(columns.toArray(), replacer));
+            this.num_columns = col.filter((c) => ['INTEGER','BIGINT','FLOAT','DOUBLE','DECIMAL'].includes(c.type));
+            this.string_columns = col.filter((c) => ['VARCHAR','TEXT','DATE','TIMESTAMP'].includes(c.type));
+            if (this.string_columns.length > 0) this.selected_x_column = this.string_columns[0].name;
+            if (this.num_columns.length > 0) this.selected_y_column = this.num_columns[0].name;
+          } catch (e) { /* PRAGMA may fail for non-table selections */ }
+        }
+      } catch (err) {
         this.$q.notify({
           message: err.message,
           color: 'negative',
@@ -842,13 +1356,55 @@ export default defineComponent({
           icon: 'warning',
           position: 'top',
         });
-
+      } finally {
+        this.$q.loading.hide();
       }
     },
+    pushHistory(sql) {
+      const trimmed = sql.trim();
+      if (!trimmed) return;
+      this.queryHistory.unshift({sql: trimmed, ts: Date.now()});
+      if (this.queryHistory.length > 50) this.queryHistory.length = 50;
+      try { window.localStorage.setItem('wtd_history', JSON.stringify(this.queryHistory)); } catch (e) {}
+    },
+    loadFromHistory(h) {
+      this.query = h.sql;
+      this.counter++;
+    },
+    clearHistory() {
+      this.queryHistory = [];
+      try { window.localStorage.removeItem('wtd_history'); } catch (e) {}
+    },
+    formatHistoryTime(ts) {
+      const diff = Date.now() - ts;
+      const mins = Math.floor(diff / 60000);
+      if (mins < 1) return 'just now';
+      if (mins < 60) return `${mins}m ago`;
+      const hrs = Math.floor(mins / 60);
+      if (hrs < 24) return `${hrs}h ago`;
+      return new Date(ts).toLocaleDateString();
+    },
+    async summarizeTable(name) {
+      this.selection = name;
+      this.query = `SUMMARIZE ${name};`;
+      this.counter++;
+      await this.search();
+    },
     async deleteTable(name, index) {
-      const q = await this.$conn.prepare(`DROP TABLE ${name};`);
-      const r = await q.query();
-      this.tables.splice(index, 1);
+      const tbl = this.tables[index];
+      if (tbl && tbl.attached) {
+        const catalog = tbl.sqlRef.split('.')[0];
+        if (!window.confirm(`Detach database "${catalog}"? This removes all its tables from this session.`)) return;
+        try {
+          await this.$conn.query(`DETACH ${catalog};`);
+        } catch (e) { /* may already be detached */ }
+        this.tables = this.tables.filter(t => !(t.attached && t.sqlRef.split('.')[0] === catalog));
+      } else {
+        if (!window.confirm(`Drop table "${name}"?`)) return;
+        const q = await this.$conn.prepare(`DROP TABLE ${name};`);
+        await q.query();
+        this.tables.splice(index, 1);
+      }
       if (this.tables.length === 0) {
         this.selection = '';
         this.query = '';
@@ -856,35 +1412,230 @@ export default defineComponent({
       } else {
         this.selectTable(this.tables[0].name);
       }
-      this.$q.notify({type: 'positive', message: `Table with name "${name}" Deleted!!`, position: 'top'})
+      this.$q.notify({type: 'positive', message: `Removed "${name}"`, position: 'top'});
     },
-    handleDrop(e) {
+    async handleDrop(e) {
       e.preventDefault();
-      this.$refs.uploaderref.addFiles(e.dataTransfer.files);
-    },
-    download_csv() {
-      let self = this;
-
-      function s2ab(s) {
-        let buf = new ArrayBuffer(s.length);
-        let view = new Uint8Array(buf);
-        for (let i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xff;
-        return buf;
+      const items = e.dataTransfer.items;
+      const collected = [];
+      if (items && items.length > 0 && items[0].webkitGetAsEntry) {
+        for (const item of items) {
+          const entry = item.webkitGetAsEntry();
+          if (entry) await this.collectFromEntry(entry, collected);
+        }
+      } else {
+        for (const f of e.dataTransfer.files) collected.push(f);
       }
-
-      let data = self.rows
-      const sheet = XLSX.utils.json_to_sheet(data);
-      let wbout = XLSX.write({
-        SheetNames: ["Sheet1"],
-        Sheets: {"Sheet1": sheet}
-      }, {
-        bookType: 'csv',
-        bookSST: true,
-        type: 'binary'
-      });
-      saveAs(new Blob([s2ab(wbout)], {
-        type: "application/octet-stream"
-      }), `${self.selection}.csv`);
+      if (collected.length > 0) this.$refs.uploaderref.addFiles(collected);
+    },
+    async collectFromEntry(entry, collected) {
+      if (entry.isFile) {
+        const f = await new Promise((resolve, reject) => entry.file(resolve, reject));
+        collected.push(f);
+      } else if (entry.isDirectory) {
+        const reader = entry.createReader();
+        // readEntries returns batches; loop until empty
+        while (true) {
+          const batch = await new Promise((resolve) => reader.readEntries(resolve));
+          if (!batch.length) break;
+          for (const e of batch) await this.collectFromEntry(e, collected);
+        }
+      }
+    },
+    _b64encode(u8) {
+      let s = '';
+      for (let i = 0; i < u8.length; i += 0x8000) {
+        s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
+      }
+      return btoa(s);
+    },
+    _b64decode(b64) {
+      const s = atob(b64);
+      const u8 = new Uint8Array(s.length);
+      for (let i = 0; i < s.length; i++) u8[i] = s.charCodeAt(i);
+      return u8;
+    },
+    formatSql(sql) {
+      if (!sql) return sql;
+      const KW = ['SELECT','FROM','WHERE','GROUP BY','ORDER BY','HAVING','LIMIT','OFFSET',
+                  'LEFT JOIN','RIGHT JOIN','INNER JOIN','OUTER JOIN','FULL JOIN','CROSS JOIN','JOIN',
+                  'ON','AND','OR','UNION ALL','UNION','INSERT INTO','VALUES','UPDATE','SET',
+                  'DELETE FROM','CREATE TABLE','CREATE VIEW','DROP TABLE','WITH','AS'];
+      let out = sql.replace(/\s+/g, ' ').trim();
+      for (const k of KW) {
+        const pat = new RegExp(`\\b${k.replace(/ /g, '\\s+')}\\b`, 'gi');
+        const replacement = ['AS','ON','AND','OR'].includes(k) ? ` ${k} ` : `\n${k} `;
+        out = out.replace(pat, replacement);
+      }
+      return out.replace(/[ \t]+/g, ' ').replace(/\n /g, '\n').replace(/^\n/, '').trim();
+    },
+    formatCurrentSql() {
+      this.query = this.formatSql(this.query);
+      this.counter++;
+    },
+    async runExplain() {
+      if (!this.query || !this.query.trim()) return;
+      const stripped = this.query.trim().replace(/;\s*$/, '');
+      const saved = this.query;
+      this.query = `EXPLAIN ${stripped};`;
+      try {
+        await this.search();
+      } finally {
+        this.query = saved;
+      }
+    },
+    async toggleExtension(ext) {
+      if (this.loadedExtensions.includes(ext)) {
+        this.$q.notify({type: 'info', message: `${ext} already loaded (cannot unload in DuckDB-WASM)`, position: 'top'});
+        return;
+      }
+      this.$q.loading.show({message: `Loading ${ext}...`});
+      try {
+        await this.$conn.query(`INSTALL ${ext};`);
+        await this.$conn.query(`LOAD ${ext};`);
+        this.loadedExtensions.push(ext);
+        this.$q.notify({type: 'positive', message: `Loaded ${ext}`, position: 'top'});
+      } catch (err) {
+        this.$q.notify({type: 'negative', message: `Failed to load ${ext}: ${err.message}`, position: 'top'});
+      } finally {
+        this.$q.loading.hide();
+      }
+    },
+    async exportWorkbook() {
+      const localTables = this.tables.filter(t => !t.attached);
+      if (localTables.length === 0) {
+        this.$q.notify({type: 'negative', message: 'No local tables to export', position: 'top'});
+        return;
+      }
+      this.$q.loading.show({message: 'Building workbook...'});
+      try {
+        const wb = {
+          version: 1,
+          created: new Date().toISOString(),
+          tables: [],
+          query: this.query,
+          chart_config: {
+            type: this.selected_chart_type,
+            x: this.selected_x_column,
+            y: this.selected_y_column
+          }
+        };
+        for (const t of localTables) {
+          const outName = `__wb_${t.name}_${Date.now()}.parquet`;
+          await this.$conn.query(`COPY (SELECT * FROM ${t.name}) TO '${outName}' (FORMAT 'parquet');`);
+          const buf = await this.$db.copyFileToBuffer(outName);
+          try { await this.$db.dropFile(outName); } catch (e) {}
+          wb.tables.push({name: t.name, parquet_b64: this._b64encode(buf)});
+        }
+        const blob = new Blob([JSON.stringify(wb)], {type: 'application/json'});
+        saveAs(blob, `workbook_${Date.now()}.wtd`);
+        this.$q.notify({type: 'positive', message: `Exported ${wb.tables.length} table(s)`, position: 'top'});
+      } catch (err) {
+        this.$q.notify({type: 'negative', message: `Workbook export failed: ${err.message}`, position: 'top'});
+      } finally {
+        this.$q.loading.hide();
+      }
+    },
+    async onWorkbookFile(e) {
+      const file = e.target.files[0];
+      e.target.value = '';
+      if (!file) return;
+      this.$q.loading.show({message: 'Importing workbook...'});
+      try {
+        const text = await file.text();
+        const wb = JSON.parse(text);
+        if (!wb.tables || !Array.isArray(wb.tables)) throw new Error('Invalid workbook file');
+        let added = 0;
+        for (const t of wb.tables) {
+          if (this.tables.some(x => x.name === t.name)) continue;
+          const buf = this._b64decode(t.parquet_b64);
+          const fname = `__import_${t.name}_${Date.now()}.parquet`;
+          await this.$db.registerFileBuffer(fname, buf);
+          await this.$conn.query(`CREATE TABLE ${t.name} AS SELECT * FROM '${fname}';`);
+          await this.addTableToList(t.name);
+          try { await this.$db.dropFile(fname); } catch (e) {}
+          added++;
+        }
+        if (wb.query) this.query = wb.query;
+        if (wb.chart_config) {
+          if (wb.chart_config.type) this.selected_chart_type = wb.chart_config.type;
+          if (wb.chart_config.x) this.selected_x_column = wb.chart_config.x;
+          if (wb.chart_config.y) this.selected_y_column = wb.chart_config.y;
+        }
+        this.counter++;
+        this.$q.notify({type: 'positive', message: `Imported ${added} table(s)`, position: 'top'});
+      } catch (err) {
+        this.$q.notify({type: 'negative', message: `Workbook import failed: ${err.message}`, position: 'top'});
+      } finally {
+        this.$q.loading.hide();
+      }
+    },
+    shareQueryUrl() {
+      const payload = {
+        q: this.query,
+        c: this.selected_chart_type,
+        x: this.selected_x_column,
+        y: this.selected_y_column
+      };
+      try {
+        const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+        const url = `${window.location.origin}${window.location.pathname}#wtd=${encoded}`;
+        window.history.replaceState(null, '', `#wtd=${encoded}`);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(
+            () => this.$q.notify({type: 'positive', message: 'Share URL copied to clipboard', position: 'top'}),
+            () => this.$q.notify({type: 'info', message: url, position: 'top', timeout: 8000})
+          );
+        } else {
+          this.$q.notify({type: 'info', message: url, position: 'top', timeout: 8000});
+        }
+      } catch (err) {
+        this.$q.notify({type: 'negative', message: `Share failed: ${err.message}`, position: 'top'});
+      }
+    },
+    loadFromHash() {
+      const hash = window.location.hash;
+      if (!hash || !hash.includes('wtd=')) return false;
+      try {
+        const encoded = hash.replace(/^#wtd=/, '');
+        const json = decodeURIComponent(escape(atob(encoded)));
+        const payload = JSON.parse(json);
+        if (payload.q) this.query = payload.q;
+        if (payload.c) this.selected_chart_type = payload.c;
+        if (payload.x) this.selected_x_column = payload.x;
+        if (payload.y) this.selected_y_column = payload.y;
+        this.counter++;
+        this.$q.notify({type: 'info', message: 'Loaded query from URL — bring your own data', position: 'top', timeout: 5000});
+        return true;
+      } catch (e) {
+        return false;
+      }
+    },
+    async exportResults(format) {
+      if (!this.query || !this.selection) {
+        this.$q.notify({type: 'negative', message: 'Run a query first', position: 'top'});
+        return;
+      }
+      const formats = {
+        csv:     { ext: 'csv',     opts: "(FORMAT 'csv', HEADER)" },
+        parquet: { ext: 'parquet', opts: "(FORMAT 'parquet')" },
+        json:    { ext: 'json',    opts: "(FORMAT 'json')" }
+      };
+      const f = formats[format];
+      if (!f) return;
+      const stripped = this.query.trim().replace(/;\s*$/, '');
+      const outName = `__export_${Date.now()}.${f.ext}`;
+      this.$q.loading.show({message: `Exporting ${f.ext.toUpperCase()}...`});
+      try {
+        await this.$conn.query(`COPY (${stripped}) TO '${outName}' ${f.opts};`);
+        const buffer = await this.$db.copyFileToBuffer(outName);
+        saveAs(new Blob([buffer]), `${this.selection}.${f.ext}`);
+        try { await this.$db.dropFile(outName); } catch (e) { /* ignore */ }
+      } catch (err) {
+        this.$q.notify({type: 'negative', message: `Export failed: ${err.message}`, position: 'top'});
+      } finally {
+        this.$q.loading.hide();
+      }
     },
     openPopUp() {
       this.getStartedDialog = true;
@@ -893,9 +1644,40 @@ export default defineComponent({
       this.getStartedDialog = false,
         this.slide = 'step_1';
     },
-    uploadSampleFile() {
-      const blob = new Blob([this.sample_csv], {type: 'text/csv'});
-      const file = new File([blob], 'sample.csv', {type: 'text/csv'});
+    openPasteDialog() {
+      this.pasteText = '';
+      this.pasteTableName = `paste_${Date.now().toString().slice(-5)}`;
+      this.pasteDialog = true;
+    },
+    async confirmPaste() {
+      const name = this.pasteTableName.replace(/[^a-zA-Z0-9]/g, '_');
+      if (!name) { this.$q.notify({type:'negative', message:'Invalid table name', position:'top'}); return; }
+      if (this.tables.some(t => t.name === name)) {
+        this.$q.notify({type:'negative', message:`Table "${name}" already exists`, position:'top'});
+        return;
+      }
+      this.pasteDialog = false;
+      this.$q.loading.show();
+      try {
+        await this.$db.registerFileText(`${name}.csv`, this.pasteText);
+        await this.$conn.query(`CREATE TABLE ${name} AS SELECT * FROM read_csv_auto('${name}.csv', header=true);`);
+        await this.processNewTable(name);
+      } catch (err) {
+        this.$q.loading.hide();
+        this.$q.notify({type:'negative', message:`Paste import failed: ${err.message}`, position:'top'});
+      }
+    },
+    loadSampleByKey(key) {
+      const samples = {
+        customers: {text: sample_csv,  name: 'customers'},
+        iris:      {text: iris_csv,    name: 'iris'},
+        weather:   {text: weather_csv, name: 'weather'},
+        orders:    {text: orders_csv,  name: 'orders'}
+      };
+      const s = samples[key];
+      if (!s) return;
+      const blob = new Blob([s.text], {type: 'text/csv'});
+      const file = new File([blob], `${s.name}.csv`, {type: 'text/csv'});
       this.$refs.uploaderref.addFiles([file]);
     }
   },
@@ -991,14 +1773,70 @@ export default defineComponent({
       }
     },
     getXAxisOptions() {
-      if (this.selected_chart_type === 'scatter') {
-        return this.num_columns.map((col) => {
-          return col['name']
-        })
+      if (this.selected_chart_type === 'scatter' || this.selected_chart_type === 'histogram') {
+        return this.num_columns.map((col) => col['name']);
       }
-      return this.string_columns.map((col) => {
-        return col['name']
-      })
+      return this.string_columns.map((col) => col['name']);
+    },
+    getLineOptions() {
+      const base = this.getBarOptions;
+      return {
+        ...base,
+        series: [{
+          type: 'line',
+          smooth: true,
+          symbol: 'circle',
+          symbolSize: 6,
+          lineStyle: {color: 'rgba(196, 249, 99)', width: 2},
+          itemStyle: {color: 'rgba(196, 249, 99)'},
+          data: this.rows.map(row => row[this.selected_y_column])
+        }]
+      };
+    },
+    getHistogramOptions() {
+      const col = this.selected_x_column;
+      const values = this.rows.map(r => Number(r[col])).filter(v => Number.isFinite(v));
+      if (values.length === 0) {
+        return {backgroundColor: '#0b0b0b', xAxis: {data: []}, yAxis: {}, series: [{type: 'bar', data: []}]};
+      }
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const range = max - min;
+      const bucketCount = Math.min(20, Math.max(5, Math.floor(Math.sqrt(values.length))));
+      const width = range === 0 ? 1 : range / bucketCount;
+      const buckets = new Array(bucketCount).fill(0);
+      for (const v of values) {
+        let idx = Math.floor((v - min) / width);
+        if (idx >= bucketCount) idx = bucketCount - 1;
+        buckets[idx]++;
+      }
+      const labels = buckets.map((_, i) => {
+        const lo = min + i * width;
+        const hi = lo + width;
+        return `${numeral(lo).format('0.[00]a')}–${numeral(hi).format('0.[00]a')}`;
+      });
+      return {
+        backgroundColor: '#0b0b0b',
+        grid: {left: '5%', right: '5%', bottom: '20%'},
+        tooltip: {},
+        xAxis: {
+          data: labels,
+          axisLine: {show: false},
+          axisTick: {show: false},
+          axisLabel: {color: '#DFDEDF', rotate: 30, fontSize: 10}
+        },
+        yAxis: {
+          axisLine: {show: false},
+          axisTick: {show: false},
+          splitLine: {show: false},
+          axisLabel: {color: '#DFDEDF', fontWeight: 700, fontSize: '11px'}
+        },
+        series: [{
+          type: 'bar',
+          itemStyle: {borderRadius: [4, 4], color: 'rgba(196, 249, 99)'},
+          data: buckets
+        }]
+      };
     },
     getYAxisOptions() {
       return this.num_columns.map((col) => {
@@ -1114,9 +1952,14 @@ export default defineComponent({
 }
 
 .get-started-card {
-  width: 30rem;
-  height: 39rem;
+  width: 34rem;
+  max-height: 90vh;
   border-radius: 50px;
+}
+
+.csv-header-options .q-radio__label,
+.csv-header-options .q-radio {
+  color: #DFDEDF !important;
 }
 </style>
 <style>
