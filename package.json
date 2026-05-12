@@ -9,7 +9,7 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@duckdb/duckdb-wasm": "^1.20.0",
+    "@duckdb/duckdb-wasm": "^1.32.0",
     "@quasar/extras": "^1.17.0",
     "ace-builds": "^1.32.8",
     "axios": "^0.21.1",

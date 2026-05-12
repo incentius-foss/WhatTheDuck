@@ -31,3 +31,29 @@
 .q-dark{
   background-color: #101010;
 }
+
+/* Register "hara" as a Quasar color so color="hara" works on Q* components */
+.text-hara { color: #C4F963 !important; }
+.bg-hara { background: #C4F963 !important; }
+
+/* Make q-menu / q-tooltip blend with the app's dark theme:
+   the default light-theme box-shadow reads as a halo against #0B0B0B. */
+.q-menu {
+  box-shadow: 0 0 0 1px #202020, 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+  background-color: #1E1E1E !important;
+  color: #DFDEDF !important;
+}
+.q-menu .q-item {
+  color: #DFDEDF;
+  min-height: 36px;
+}
+.q-menu .q-item--clickable:hover,
+.q-menu .q-item.q-manual-focusable--focused,
+.q-menu .q-item--active {
+  background-color: #202020 !important;
+}
+.q-tooltip {
+  background-color: #1E1E1E !important;
+  color: #DFDEDF !important;
+  box-shadow: 0 0 0 1px #202020 !important;
+}
