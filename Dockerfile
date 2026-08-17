@@ -1,5 +1,7 @@
-# Use Node.js Alpine image as base
-FROM node:alpine
+# Use Node.js Alpine image as base.
+# Pinned: @quasar/app-vite v2 + Vite 6 need Node >= 18, and an unpinned `node:alpine`
+# will eventually float past the range declared in package.json "engines".
+FROM node:22-alpine
 
 # Set working directory in the container
 WORKDIR /usr/src/app

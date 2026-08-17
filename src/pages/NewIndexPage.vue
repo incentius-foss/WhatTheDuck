@@ -334,6 +334,8 @@
                color="#101010"
                :rows="rows"
                row-key="name"
+               v-model:pagination="tablePagination"
+               :rows-per-page-options="[10, 25, 50, 100, 0]"
                style=""
                class="dd-scroll tw-rounded-xl tw-border tw-border-editorborder"
       >
@@ -650,6 +652,7 @@ export default defineComponent({
       pasteDialog: false,
       pasteText: '',
       pasteTableName: '',
+      tablePagination: {rowsPerPage: 10},
       availableExtensions: ['spatial', 'inet', 'icu', 'fts'],
       loadedExtensions: [],
       shortcutList: (() => {
@@ -669,7 +672,9 @@ export default defineComponent({
     VueEcharts
   },
   async created() {
-    this.openPopUp();
+    let seenWelcome = false;
+    try { seenWelcome = window.localStorage.getItem('wtd_seen_welcome') === 'true'; } catch (e) {}
+    if (!seenWelcome) this.openPopUp();
     this.$bus.on('openPopUp', this.openPopUp)
     this.openDrawer = this.$q.platform.is.desktop ? true : false;
     this.persistEnabled = !!this.$persistEnabled;
@@ -683,6 +688,12 @@ export default defineComponent({
     this.loadFromHash();
   },
   methods: {
+    quoteIdent(name) {
+      return `"${String(name).replace(/"/g, '""')}"`;
+    },
+    quoteRef(ref) {
+      return String(ref).split('.').map(p => this.quoteIdent(p)).join('.');
+    },
     chartChange() {
       this.selected_x_column = this.getXAxisOptions[0];
       if (this.selected_chart_type !== 'histogram' && this.num_columns.length > 0) {
@@ -710,6 +721,15 @@ export default defineComponent({
           x: this.selected_x_column,
           y: this.selected_y_column
         };
+        window.localStorage.setItem('wtd_chart_config', JSON.stringify(all));
+      } catch (e) {}
+    },
+    removeChartConfig(name) {
+      try {
+        const raw = window.localStorage.getItem('wtd_chart_config');
+        if (!raw) return;
+        const all = JSON.parse(raw);
+        delete all[name];
         window.localStorage.setItem('wtd_chart_config', JSON.stringify(all));
       } catch (e) {}
     },
@@ -774,7 +794,7 @@ export default defineComponent({
     async selectTable(name) {
       this.selection = name;
       const tbl = this.tables.find(t => t.name === name);
-      const ref = (tbl && tbl.sqlRef) ? tbl.sqlRef : name;
+      const ref = this.quoteRef((tbl && tbl.sqlRef) ? tbl.sqlRef : name);
       this.query = `SELECT *
                     FROM ${ref} LIMIT 10;`
       await this.search();
@@ -795,14 +815,16 @@ export default defineComponent({
     },
     parseFileMeta(filename) {
       const parts = filename.split('.');
-      let baseName = parts[0] || 'data';
       let last = (parts[parts.length - 1] || '').toLowerCase();
       let fileType = last;
       let isGzipped = false;
+      let extSegments = parts.length > 1 ? 1 : 0;
       if ((last === 'gz' || last === 'gzip') && parts.length >= 3) {
         isGzipped = true;
         fileType = (parts[parts.length - 2] || '').toLowerCase();
+        extSegments = 2;
       }
+      const baseName = parts.slice(0, parts.length - extSegments).join('.') || 'data';
       const name = baseName.replace(/[^a-zA-Z0-9]/g, '_');
       return {name, fileType, isGzipped};
     },
@@ -810,12 +832,12 @@ export default defineComponent({
       this.columns = []
       const {name, fileType, isGzipped} = this.parseFileMeta(this.file.name);
 
-      const allowed = ['csv', 'parquet', 'json', 'xlsx', 'xls', 'duckdb'];
+      const allowed = ['csv', 'parquet', 'json', 'xlsx', 'xls', 'duckdb', 'db', 'sqlite'];
       if (!allowed.includes(fileType)) {
         this.$refs.uploaderref.reset();
         this.$q.notify({
           type: 'negative',
-          message: `Unsupported file type ".${fileType}". Supported: CSV, Parquet, JSON, Excel, DuckDB (with optional .gz for CSV/JSON).`,
+          message: `Unsupported file type ".${fileType}". Supported: CSV, Parquet, JSON, Excel, DuckDB, SQLite (with optional .gz for CSV/JSON).`,
           position: 'top'
         });
         return
@@ -855,7 +877,7 @@ export default defineComponent({
         if (fileType === 'parquet') {
           try {
             await this.$db.registerFileHandle(`${name}.parquet`, this.file, DuckDBDataProtocol.BROWSER_FILEREADER, true);
-            await this.$conn.query(`CREATE TABLE ${name} AS SELECT * FROM '${name}.parquet';`);
+            await this.$conn.query(`CREATE TABLE ${this.quoteIdent(name)} AS SELECT * FROM '${name}.parquet';`);
             await this.processNewTable(name);
           } catch (error) {
             console.error('Error processing Parquet:', error);
@@ -866,7 +888,7 @@ export default defineComponent({
           try {
             const ext = isGzipped ? 'json.gz' : 'json';
             await this.$db.registerFileHandle(`${name}.${ext}`, this.file, DuckDBDataProtocol.BROWSER_FILEREADER, true);
-            await this.$conn.query(`CREATE TABLE ${name} AS SELECT * FROM read_json_auto('${name}.${ext}');`);
+            await this.$conn.query(`CREATE TABLE ${this.quoteIdent(name)} AS SELECT * FROM read_json_auto('${name}.${ext}');`);
             await this.processNewTable(name);
           } catch (error) {
             console.error('Error processing JSON:', error);
@@ -875,6 +897,8 @@ export default defineComponent({
           }
         } else if (fileType === 'duckdb') {
           await this.ingestDuckdbFile(this.file, name);
+        } else if (fileType === 'db' || fileType === 'sqlite') {
+          await this.ingestSqliteFile(this.file, name);
         }
       } catch (error) {
         console.error('Error in upload:', error);
@@ -908,7 +932,7 @@ export default defineComponent({
       try {
         const dbFile = `${name}.duckdb`;
         await this.$db.registerFileHandle(dbFile, file, DuckDBDataProtocol.BROWSER_FILEREADER, true);
-        await this.$conn.query(`ATTACH '${dbFile}' AS ${name} (READ_ONLY);`);
+        await this.$conn.query(`ATTACH '${dbFile}' AS ${this.quoteIdent(name)} (READ_ONLY);`);
         await this.listAttachedDatabaseTables(name);
         this.$q.notify({type: 'positive', message: `Attached DuckDB database "${name}"`, position: 'top'});
         this.$q.loading.hide();
@@ -916,6 +940,24 @@ export default defineComponent({
       } catch (error) {
         console.error('Error attaching DuckDB:', error);
         this.$q.notify({type: 'negative', message: `DuckDB attach failed: ${error.message}`, position: 'top'});
+        this.$q.loading.hide();
+      }
+    },
+    async ingestSqliteFile(file, name) {
+      try {
+        this.$q.loading.show({message: 'Loading SQLite extension...'});
+        await this.$conn.query('INSTALL sqlite_scanner;');
+        await this.$conn.query('LOAD sqlite_scanner;');
+        const dbFile = `${name}.sqlite`;
+        await this.$db.registerFileHandle(dbFile, file, DuckDBDataProtocol.BROWSER_FILEREADER, true);
+        await this.$conn.query(`ATTACH '${dbFile}' AS ${this.quoteIdent(name)} (TYPE SQLITE, READ_ONLY);`);
+        await this.listAttachedDatabaseTables(name);
+        this.$q.notify({type: 'positive', message: `Attached SQLite database "${name}"`, position: 'top'});
+        this.$q.loading.hide();
+        this.counter++;
+      } catch (error) {
+        console.error('Error attaching SQLite:', error);
+        this.$q.notify({type: 'negative', message: `SQLite attach failed: ${error.message}`, position: 'top'});
         this.$q.loading.hide();
       }
     },
@@ -935,7 +977,7 @@ export default defineComponent({
     async addAttachedTableToList(displayName, sqlRef, catalog, schema, tname) {
       const replacer = (k, v) => typeof v === 'bigint' ? v.toString() : v;
       try {
-        const r1 = await this.$conn.query(`SELECT CAST(COUNT(*) AS INT) AS c FROM ${sqlRef};`);
+        const r1 = await this.$conn.query(`SELECT CAST(COUNT(*) AS INT) AS c FROM ${this.quoteRef(sqlRef)};`);
         const r2 = await this.$conn.query(
           `SELECT column_name, data_type FROM information_schema.columns WHERE table_catalog='${catalog}' AND table_schema='${schema}' AND table_name='${tname}';`
         );
@@ -1025,7 +1067,7 @@ export default defineComponent({
               );
 
               // Create a table from the registered URL Parquet file
-              await this.$conn.query(`CREATE TABLE ${name} AS
+              await this.$conn.query(`CREATE TABLE ${this.quoteIdent(name)} AS
               SELECT *
               FROM '${name}.parquet';`);
 
@@ -1059,12 +1101,12 @@ export default defineComponent({
 
           if (fileExtension === 'parquet') {
             await this.$db.registerFileBuffer(`${name}.parquet`, uint8Array);
-            await this.$conn.query(`CREATE TABLE ${name} AS
+            await this.$conn.query(`CREATE TABLE ${this.quoteIdent(name)} AS
             SELECT *
             FROM '${name}.parquet';`);
           } else if (fileExtension === 'json') {
             await this.$db.registerFileBuffer(`${name}.json`, uint8Array);
-            await this.$conn.query(`CREATE TABLE ${name} AS
+            await this.$conn.query(`CREATE TABLE ${this.quoteIdent(name)} AS
             SELECT *
             FROM read_json_auto('${name}.json');`);
           }
@@ -1138,7 +1180,7 @@ export default defineComponent({
           const ext = 'csv.gz';
           const regName = `${name}.${ext}`;
           await self.$db.registerFileHandle(regName, file, DuckDBDataProtocol.BROWSER_FILEREADER, true);
-          await self.$conn.query(`CREATE TABLE ${name} AS SELECT * FROM read_csv_auto('${regName}', header=${hasHeaders});`);
+          await self.$conn.query(`CREATE TABLE ${self.quoteIdent(name)} AS SELECT * FROM read_csv_auto('${regName}', header=${hasHeaders});`);
           await self.processNewTable(name);
         } catch (error) {
           console.error('Error processing gzipped CSV:', error);
@@ -1150,10 +1192,10 @@ export default defineComponent({
       const fileReader = new FileReader();
       fileReader.onload = async function () {
         try {
-          await self.$db.registerFileText('sample_table.csv', fileReader.result);
-          await self.$conn.query(`CREATE TABLE ${name} AS
+          await self.$db.registerFileText(`${name}.csv`, fileReader.result);
+          await self.$conn.query(`CREATE TABLE ${self.quoteIdent(name)} AS
           SELECT *
-          FROM read_csv_auto('sample_table.csv', header=${hasHeaders});`);
+          FROM read_csv_auto('${name}.csv', header=${hasHeaders});`);
           await self.processNewTable(name);
         } catch (error) {
           console.error('Error processing CSV:', error);
@@ -1177,7 +1219,7 @@ export default defineComponent({
         const arrayBuffer = await response.arrayBuffer();
         const csvText = new TextDecoder('utf-8').decode(new Uint8Array(arrayBuffer));
         await this.$db.registerFileText(`${name}.csv`, csvText);
-        await this.$conn.query(`CREATE TABLE ${name} AS
+        await this.$conn.query(`CREATE TABLE ${this.quoteIdent(name)} AS
         SELECT *
         FROM read_csv_auto('${name}.csv', header=${hasHeaders});`);
         await this.processNewTable(name);
@@ -1201,7 +1243,7 @@ export default defineComponent({
       }
     },
     async addTableToList(name) {
-      const stmt1 = await this.$conn.prepare(`SELECT CAST(COUNT(*) AS INT) FROM ${name}`);
+      const stmt1 = await this.$conn.prepare(`SELECT CAST(COUNT(*) AS INT) FROM ${this.quoteIdent(name)}`);
       const res1 = await stmt1.query();
       const stmt2 = await this.$conn.prepare(`SELECT COLUMN_NAME, DATA_TYPE
                                               FROM INFORMATION_SCHEMA.COLUMNS
@@ -1279,7 +1321,7 @@ export default defineComponent({
         const r = await this.$conn.query('SHOW TABLES;');
         const names = JSON.parse(JSON.stringify(r.toArray())).map(row => row.name);
         for (const name of names) {
-          await this.$conn.query(`DROP TABLE IF EXISTS ${name};`);
+          await this.$conn.query(`DROP TABLE IF EXISTS ${this.quoteIdent(name)};`);
         }
         this.tables = [];
         this.selection = '';
@@ -1314,9 +1356,14 @@ export default defineComponent({
     async search() {
       let selected = '';
       try {
-        const aceEl = document.querySelector('.ace_editor');
-        if (aceEl && window.ace && window.ace.edit) {
-          selected = window.ace.edit(aceEl).getSelectedText() || '';
+        const inst = this.$refs.editor && this.$refs.editor.getAceInstance && this.$refs.editor.getAceInstance();
+        if (inst) {
+          selected = inst.getSelectedText() || '';
+        } else {
+          const aceEl = document.querySelector('.ace_editor');
+          if (aceEl && window.ace && window.ace.edit) {
+            selected = window.ace.edit(aceEl).getSelectedText() || '';
+          }
         }
       } catch (e) { /* ignore */ }
       const sql = (selected && selected.trim()) ? selected : this.query;
@@ -1333,21 +1380,13 @@ export default defineComponent({
         }
         const replacer = (key, value) => typeof value === 'bigint' ? value.toString() : value;
         this.rows = lastResult ? JSON.parse(JSON.stringify(lastResult.toArray(), replacer)) : [];
+        this.formatTemporalColumns(lastResult, this.rows);
         this.lastRowCount = this.rows.length;
         this.lastColCount = this.rows.length > 0 ? Object.keys(this.rows[0]).length : 0;
         this.lastDurationMs = Math.round(performance.now() - start);
         this.pushHistory(sql);
 
-        if (this.selection) {
-          try {
-            const columns = await this.$conn.query(`PRAGMA table_info(${this.selection});`);
-            const col = JSON.parse(JSON.stringify(columns.toArray(), replacer));
-            this.num_columns = col.filter((c) => ['INTEGER','BIGINT','FLOAT','DOUBLE','DECIMAL'].includes(c.type));
-            this.string_columns = col.filter((c) => ['VARCHAR','TEXT','DATE','TIMESTAMP'].includes(c.type));
-            if (this.string_columns.length > 0) this.selected_x_column = this.string_columns[0].name;
-            if (this.num_columns.length > 0) this.selected_y_column = this.num_columns[0].name;
-          } catch (e) { /* PRAGMA may fail for non-table selections */ }
-        }
+        this.deriveChartColumns(lastResult);
       } catch (err) {
         this.$q.notify({
           message: err.message,
@@ -1358,6 +1397,57 @@ export default defineComponent({
         });
       } finally {
         this.$q.loading.hide();
+      }
+    },
+    // Chart axes come from the columns of the result actually on screen, not from
+    // the selected table — otherwise charting an aggregate or joined query offers
+    // columns that its rows don't have.
+    deriveChartColumns(result) {
+      if (!result || !result.schema) {
+        this.num_columns = [];
+        this.string_columns = [];
+        return;
+      }
+      const num = [], str = [];
+      for (const f of result.schema.fields) {
+        const t = String(f.type);
+        if (/^(Int|Uint|Float|Decimal)/.test(t)) num.push({name: f.name, type: t});
+        else str.push({name: f.name, type: t});
+      }
+      this.num_columns = num;
+      this.string_columns = str;
+      // Keep the user's axis picks when the new result still has them.
+      const xPool = (this.selected_chart_type === 'scatter' || this.selected_chart_type === 'histogram') ? num : str;
+      if (!xPool.some(c => c.name === this.selected_x_column)) {
+        this.selected_x_column = xPool.length ? xPool[0].name : '';
+      }
+      if (!num.some(c => c.name === this.selected_y_column)) {
+        this.selected_y_column = num.length ? num[0].name : '';
+      }
+    },
+    // Arrow returns DATE/TIMESTAMP values as epoch-ms numbers; render them as readable strings
+    formatTemporalColumns(result, rows) {
+      if (!result || !rows.length) return;
+      const dateFields = [], tsFields = [];
+      try {
+        for (const f of result.schema.fields) {
+          const t = String(f.type);
+          if (t.startsWith('Date')) dateFields.push(f.name);
+          else if (t.startsWith('Timestamp')) tsFields.push(f.name);
+        }
+      } catch (e) { return; }
+      if (!dateFields.length && !tsFields.length) return;
+      for (const row of rows) {
+        for (const c of dateFields) {
+          const d = new Date(Number(row[c]));
+          if (row[c] != null && !isNaN(d)) row[c] = d.toISOString().slice(0, 10);
+        }
+        for (const c of tsFields) {
+          const d = new Date(Number(row[c]));
+          if (row[c] != null && !isNaN(d)) {
+            row[c] = d.toISOString().replace('T', ' ').replace('Z', '').replace(/\.000$/, '');
+          }
+        }
       }
     },
     pushHistory(sql) {
@@ -1386,7 +1476,8 @@ export default defineComponent({
     },
     async summarizeTable(name) {
       this.selection = name;
-      this.query = `SUMMARIZE ${name};`;
+      const tbl = this.tables.find(t => t.name === name);
+      this.query = `SUMMARIZE ${this.quoteRef((tbl && tbl.sqlRef) ? tbl.sqlRef : name)};`;
       this.counter++;
       await this.search();
     },
@@ -1396,14 +1487,15 @@ export default defineComponent({
         const catalog = tbl.sqlRef.split('.')[0];
         if (!window.confirm(`Detach database "${catalog}"? This removes all its tables from this session.`)) return;
         try {
-          await this.$conn.query(`DETACH ${catalog};`);
+          await this.$conn.query(`DETACH ${this.quoteIdent(catalog)};`);
         } catch (e) { /* may already be detached */ }
         this.tables = this.tables.filter(t => !(t.attached && t.sqlRef.split('.')[0] === catalog));
       } else {
         if (!window.confirm(`Drop table "${name}"?`)) return;
-        const q = await this.$conn.prepare(`DROP TABLE ${name};`);
+        const q = await this.$conn.prepare(`DROP TABLE ${this.quoteIdent(name)};`);
         await q.query();
         this.tables.splice(index, 1);
+        this.removeChartConfig(name);
       }
       if (this.tables.length === 0) {
         this.selection = '';
@@ -1522,7 +1614,7 @@ export default defineComponent({
         };
         for (const t of localTables) {
           const outName = `__wb_${t.name}_${Date.now()}.parquet`;
-          await this.$conn.query(`COPY (SELECT * FROM ${t.name}) TO '${outName}' (FORMAT 'parquet');`);
+          await this.$conn.query(`COPY (SELECT * FROM ${this.quoteIdent(t.name)}) TO '${outName}' (FORMAT 'parquet');`);
           const buf = await this.$db.copyFileToBuffer(outName);
           try { await this.$db.dropFile(outName); } catch (e) {}
           wb.tables.push({name: t.name, parquet_b64: this._b64encode(buf)});
@@ -1551,7 +1643,7 @@ export default defineComponent({
           const buf = this._b64decode(t.parquet_b64);
           const fname = `__import_${t.name}_${Date.now()}.parquet`;
           await this.$db.registerFileBuffer(fname, buf);
-          await this.$conn.query(`CREATE TABLE ${t.name} AS SELECT * FROM '${fname}';`);
+          await this.$conn.query(`CREATE TABLE ${this.quoteIdent(t.name)} AS SELECT * FROM '${fname}';`);
           await this.addTableToList(t.name);
           try { await this.$db.dropFile(fname); } catch (e) {}
           added++;
@@ -1612,7 +1704,7 @@ export default defineComponent({
       }
     },
     async exportResults(format) {
-      if (!this.query || !this.selection) {
+      if (!this.query || !this.query.trim()) {
         this.$q.notify({type: 'negative', message: 'Run a query first', position: 'top'});
         return;
       }
@@ -1623,13 +1715,15 @@ export default defineComponent({
       };
       const f = formats[format];
       if (!f) return;
-      const stripped = this.query.trim().replace(/;\s*$/, '');
+      const statements = this.splitSql(this.query);
+      if (statements.length === 0) return;
+      const stripped = statements[statements.length - 1];
       const outName = `__export_${Date.now()}.${f.ext}`;
       this.$q.loading.show({message: `Exporting ${f.ext.toUpperCase()}...`});
       try {
         await this.$conn.query(`COPY (${stripped}) TO '${outName}' ${f.opts};`);
         const buffer = await this.$db.copyFileToBuffer(outName);
-        saveAs(new Blob([buffer]), `${this.selection}.${f.ext}`);
+        saveAs(new Blob([buffer]), `${this.selection || 'results'}.${f.ext}`);
         try { await this.$db.dropFile(outName); } catch (e) { /* ignore */ }
       } catch (err) {
         this.$q.notify({type: 'negative', message: `Export failed: ${err.message}`, position: 'top'});
@@ -1641,8 +1735,9 @@ export default defineComponent({
       this.getStartedDialog = true;
     },
     getStarted() {
-      this.getStartedDialog = false,
-        this.slide = 'step_1';
+      this.getStartedDialog = false;
+      this.slide = 'step_1';
+      try { window.localStorage.setItem('wtd_seen_welcome', 'true'); } catch (e) {}
     },
     openPasteDialog() {
       this.pasteText = '';
@@ -1660,7 +1755,7 @@ export default defineComponent({
       this.$q.loading.show();
       try {
         await this.$db.registerFileText(`${name}.csv`, this.pasteText);
-        await this.$conn.query(`CREATE TABLE ${name} AS SELECT * FROM read_csv_auto('${name}.csv', header=true);`);
+        await this.$conn.query(`CREATE TABLE ${this.quoteIdent(name)} AS SELECT * FROM read_csv_auto('${name}.csv', header=true);`);
         await this.processNewTable(name);
       } catch (err) {
         this.$q.loading.hide();

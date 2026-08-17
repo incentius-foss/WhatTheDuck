@@ -9,10 +9,10 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 
-const { configure } = require('quasar/wrappers');
+import { configure } from 'quasar/wrappers';
 
 
-module.exports = configure(function (/* ctx */) {
+export default configure(function (/* ctx */) {
   return {
 
 
@@ -50,8 +50,8 @@ module.exports = configure(function (/* ctx */) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
     build: {
       target: {
-        browser: [ 'es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1' ],
-        node: 'node16'
+        browser: [ 'es2022', 'edge88', 'firefox78', 'chrome87', 'safari13.1' ],
+        node: 'node18'
       },
 
       vueRouterMode: 'history', // available values: 'hash', 'history'

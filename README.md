@@ -4,11 +4,11 @@
 
 
 
-WhatTheDuck is an open-source web application built on DuckDB, designed to allow users to upload CSV files, store them
-in tables, and perform SQL queries on the uploaded data. The application also provides the functionality to download
-filtered results in CSV format, supports uploading multiple files, and enables users to perform join queries. It's
-important to note that the application stores data temporarily in memory, and refreshing the page will clear all
-uploaded data.
+WhatTheDuck is an open-source web application built on DuckDB-WASM. Upload CSV, Parquet, JSON, Excel, DuckDB, or
+SQLite files (or import CSV/Parquet/JSON from a URL), store them as tables, and run SQL queries on them — entirely in
+your browser. Results can be charted (bar, line, scatter, histogram) and downloaded as CSV, Parquet, or JSON, and a
+whole session can be exported/imported as a `.wtd` workbook. By default data lives in memory and is cleared on
+refresh; you can opt in (Welcome dialog toggle) to persist tables in your browser's OPFS storage between sessions.
 
 > [!NOTE]  
 > Your data will be processed locally in your browser and won't be sent anywhere.
